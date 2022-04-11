@@ -9,17 +9,13 @@ import (
 	"github.com/hisyntax/go-monnify/helper"
 )
 
-func BearerToken() (string, error) {
+func BearerToken(base_url, basic_auth string) (string, error) {
 	client := Client
-	envErr := helper.GetEnv()
-	if envErr != nil {
-		log.Println(helper.EnvErr)
-	}
-	url := fmt.Sprintf("%s/api/v1/auth/login/", helper.Base_url)
+	url := fmt.Sprintf("%s/api/v1/auth/login/", base_url)
 	req, _ := http.NewRequest("POST", url, nil)
 
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Authorization", helper.Basic_Auth)
+	req.Header.Add("Authorization", basic_auth)
 
 	resp, err := client.Do(req)
 	if err != nil {
