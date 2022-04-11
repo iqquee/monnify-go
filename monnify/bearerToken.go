@@ -8,7 +8,7 @@ import (
 	"github.com/hisyntax/go-monnify/helper"
 )
 
-func BearerToken() {
+func BearerToken() (string, error) {
 	client := Client
 	envErr := helper.GetEnv()
 	if envErr != nil {
@@ -23,7 +23,7 @@ func BearerToken() {
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Println(helper.ServerErr)
-		return
+		return "", err
 	}
 
 	defer resp.Body.Close()
@@ -31,4 +31,6 @@ func BearerToken() {
 
 	log.Println(resp.Status)
 	log.Println(string(resp_body))
+
+	return string(resp_body), nil
 }
