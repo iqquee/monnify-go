@@ -1,6 +1,7 @@
 package monnify
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -14,7 +15,7 @@ func BearerToken() (string, error) {
 	if envErr != nil {
 		log.Println(helper.EnvErr)
 	}
-	url := helper.Base_url + "/api/v1/auth/login/"
+	url := fmt.Sprintf("%s/api/v1/auth/login/", helper.Base_url)
 	req, _ := http.NewRequest("POST", url, nil)
 
 	req.Header.Add("Content-Type", "application/json")
