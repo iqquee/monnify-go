@@ -1,12 +1,12 @@
 package helper
 
-import (
-	"os"
-)
+import "encoding/base64"
 
-var Base_url = os.Getenv("MONNIFY_BASE_URL")
-var Basic_Auth = os.Getenv("BASIC_AUTH")
 var (
-	EnvErr    = ".env file not found"
 	ServerErr = "error occured while sending request to the server"
 )
+
+func Base64(text string) string {
+	encodedText := base64.StdEncoding.EncodeToString([]byte(text))
+	return encodedText
+}
