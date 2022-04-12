@@ -1,6 +1,7 @@
 package monnify
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -9,7 +10,32 @@ import (
 	"github.com/hisyntax/go-monnify/helper"
 )
 
-func BearerToken(base_url, apiKey, SecretKey string) (string, error) {
+var Base_url string = "https://sandbox.monnify.com"
+
+func GetBearerToken() {
+	api_key := "MK_TEST_GVMPXQZ1FK"
+	secret_key := "99QPF9WCMGC488SYS2YWVHWEZ9R2JD7E"
+	BearerGenToken, err := BearerToken(Base_url, api_key, secret_key)
+	if err != nil {
+		log.Println(err)
+	}
+
+	log.Println(BearerGenToken)
+}
+
+type Token struct {
+	RequestSuccessful bool
+	ResponseMessage   string
+	ResponseCode      string
+	ResponseBody      TokenBody
+}
+
+type TokenBody struct {
+	AccessToken string
+	ExpiresIn   int
+}
+
+func BearerToken(base_url, apiKey, SecretKey string) (*Token, error) {
 	api_secret_key := fmt.Sprintf("%s:%s", apiKey, SecretKey)
 	basic_auth := helper.Base64(api_secret_key)
 
@@ -23,7 +49,7 @@ func BearerToken(base_url, apiKey, SecretKey string) (string, error) {
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Println(helper.ServerErr)
-		return "", err
+		return nil, err
 	}
 
 	defer resp.Body.Close()
@@ -32,5 +58,7 @@ func BearerToken(base_url, apiKey, SecretKey string) (string, error) {
 	log.Println(resp.Status)
 	log.Println(string(resp_body))
 
-	return string(resp_body), nil
+	var token Token
+	json.Unmarshal(resp_body, &token)
+	return &token, nil
 }
