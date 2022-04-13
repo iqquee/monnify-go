@@ -1,143 +1,83 @@
 package monnify
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 )
 
-// {
-// 	"requestSuccessful": true,
-// 	"responseMessage": "success",
-// 	"responseCode": "0",
-// 	"responseBody": {
-// 	  "content": [
-// 		{
-// 		  "customerDTO": {
-// 			"email": "tobi@toio.com",
-// 			"name": "Mr Tobi",
-// 			"merchantCode": "QE5KDSBPD3RN"
-// 		  },
-// 		  "providerAmount": 10,
-// 		  "paymentMethod": "ACCOUNT_TRANSFER",
-// 		  "createdOn": "2019-12-10T14:12:00.000+0000",
-// 		  "amount": 5000,
-// 		  "flagged": false,
-// 		  "providerCode": "81884",
-// 		  "fee": 10,
-// 		  "currencyCode": "NGN",
-// 		  "completedOn": "2019-12-10T14:12:00.000+0000",
-// 		  "paymentDescription": "Elmer Martin",
-// 		  "paymentStatus": "PAID",
-// 		  "transactionReference": "MNFY|20191210141200|000247",
-// 		  "paymentReference": "MNFY|20191210141200|000247",
-// 		  "merchantCode": "QE5KDSBPD3RN",
-// 		  "merchantName": "Tobi Limited",
-// 		  "settleInstantly": false,
-// 		  "payableAmount": 5000,
-// 		  "amountPaid": 5000,
-// 		  "completed": true,
-// 		  "paymentMethodList": [],
-// 		  "collectionChannel": "RESERVED_ACCOUNT",
-// 		  "accountReference": "L6KHK65ZSZJ23CKTFJKT",
-// 		  "accountNumber": "3225593799",
-// 		  "customerEmail": "tobi@toio.com",
-// 		  "customerName": "Mr Tobi"
-// 		},
-// 		{
-// 		  "customerDTO": {
-// 			"email": "tobi@toio.com",
-// 			"name": "Mr Tobi",
-// 			"merchantCode": "QE5KDSBPD3RN"
-// 		  },
-// 		  "providerAmount": 10,
-// 		  "paymentMethod": "ACCOUNT_TRANSFER",
-// 		  "createdOn": "2019-12-10T14:11:46.000+0000",
-// 		  "amount": 2500,
-// 		  "flagged": false,
-// 		  "providerCode": "81884",
-// 		  "fee": 10,
-// 		  "currencyCode": "NGN",
-// 		  "completedOn": "2019-12-10T14:11:46.000+0000",
-// 		  "paymentDescription": "Elmer Martin",
-// 		  "paymentStatus": "PAID",
-// 		  "transactionReference": "MNFY|20191210141146|000246",
-// 		  "paymentReference": "MNFY|20191210141146|000246",
-// 		  "merchantCode": "QE5KDSBPD3RN",
-// 		  "merchantName": "Tobi Limited",
-// 		  "settleInstantly": false,
-// 		  "payableAmount": 2500,
-// 		  "amountPaid": 2500,
-// 		  "completed": true,
-// 		  "paymentMethodList": [],
-// 		  "collectionChannel": "RESERVED_ACCOUNT",
-// 		  "accountReference": "L6KHK65ZSZJ23CKTFJKT",
-// 		  "accountNumber": "3225593799",
-// 		  "customerEmail": "tobi@toio.com",
-// 		  "customerName": "Mr Tobi"
-// 		},
-// 		{
-// 		  "customerDTO": {
-// 			"email": "tobi@toio.com",
-// 			"name": "Mr Tobi",
-// 			"merchantCode": "QE5KDSBPD3RN"
-// 		  },
-// 		  "providerAmount": 10,
-// 		  "paymentMethod": "ACCOUNT_TRANSFER",
-// 		  "createdOn": "2019-12-10T14:11:25.000+0000",
-// 		  "amount": 3000,
-// 		  "flagged": false,
-// 		  "providerCode": "81884",
-// 		  "fee": 10,
-// 		  "currencyCode": "NGN",
-// 		  "completedOn": "2019-12-10T14:11:26.000+0000",
-// 		  "paymentDescription": "Elmer Martin",
-// 		  "paymentStatus": "PAID",
-// 		  "transactionReference": "MNFY|20191210141125|000245",
-// 		  "paymentReference": "MNFY|20191210141125|000245",
-// 		  "merchantCode": "QE5KDSBPD3RN",
-// 		  "merchantName": "Tobi Limited",
-// 		  "settleInstantly": false,
-// 		  "payableAmount": 3000,
-// 		  "amountPaid": 3000,
-// 		  "completed": true,
-// 		  "paymentMethodList": [],
-// 		  "collectionChannel": "RESERVED_ACCOUNT",
-// 		  "accountReference": "L6KHK65ZSZJ23CKTFJKT",
-// 		  "accountNumber": "3225593799",
-// 		  "customerEmail": "tobi@toio.com",
-// 		  "customerName": "Mr Tobi"
-// 		}
-// 	  ],
-// 	  "pageable": {
-// 		"sort": {
-// 		  "sorted": true,
-// 		  "unsorted": false,
-// 		  "empty": false
-// 		},
-// 		"pageSize": 10,
-// 		"pageNumber": 0,
-// 		"offset": 0,
-// 		"unpaged": false,
-// 		"paged": true
-// 	  },
-// 	  "totalPages": 1,
-// 	  "last": true,
-// 	  "totalElements": 3,
-// 	  "sort": {
-// 		"sorted": true,
-// 		"unsorted": false,
-// 		"empty": false
-// 	  },
-// 	  "first": true,
-// 	  "numberOfElements": 3,
-// 	  "size": 10,
-// 	  "number": 0,
-// 	  "empty": false
-// 	}
-//   }
+type AcctTransaction struct {
+	RequestSuccessful bool
+	ResponseMessage   string
+	ResponseCode      string
+	ResponseBody      AcctTransactionsBody
+}
 
-func GetAcctsTransact(base_url, bearerToken string) {
+type AcctTransactionsBody struct {
+	Content          []AcctTransactions
+	Pageable         Pageable
+	TotalPages       int
+	Last             bool
+	TotalElements    int
+	Sort             Sort
+	First            bool
+	NumberOfElements int
+	Size             int
+	Number           int
+	Empty            bool
+}
+
+type AcctTransactions struct {
+	CustomerDTO          CustomerDTO
+	ProviderAmount       int
+	PaymentMethod        string
+	CreatedOn            string
+	Amount               int
+	Flagged              bool
+	ProviderCode         string
+	Fee                  int
+	CurrencyCode         string
+	CompletedOn          string
+	PaymentDescription   string
+	PaymentStatus        string
+	TransactionReference string
+	PaymentReference     string
+	MerchantCode         string
+	MerchantName         string
+	SettleInstantly      bool
+	PayableAmount        int
+	AmountPaid           int
+	Completed            bool
+	PaymentMethodList    []string
+	CollectionChannel    string
+	AccountReference     string
+	AccountNumber        string
+	CustomerEmail        string
+	CustomerName         string
+}
+
+type CustomerDTO struct {
+	Email        string
+	Name         string
+	MerchantCode string
+}
+
+type Pageable struct {
+	Sort       Sort
+	PageSize   int
+	PageNumber int
+	Offset     int
+	Unpaged    bool
+	Paged      bool
+}
+type Sort struct {
+	Sorted   bool
+	Unsorted bool
+	Empty    bool
+}
+
+func GetAcctsTransact(base_url, bearerToken string) (*AcctTransaction, string, error) {
 	bearer_token := fmt.Sprintf("Bearer %s", bearerToken)
 
 	client := Client
@@ -151,12 +91,16 @@ func GetAcctsTransact(base_url, bearerToken string) {
 
 	if err != nil {
 		fmt.Println("Errored when sending request to the server")
-		return
+		return nil, "", err
 	}
 
 	defer resp.Body.Close()
 	resp_body, _ := ioutil.ReadAll(resp.Body)
 
+	var acctTransac AcctTransaction
+	json.Unmarshal(resp_body, &acctTransac)
+
 	fmt.Println(resp.Status)
 	fmt.Println(string(resp_body))
+	return &acctTransac, resp.Status, nil
 }
