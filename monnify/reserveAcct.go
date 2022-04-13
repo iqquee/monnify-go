@@ -39,9 +39,9 @@ type ReserveAcctResponseBody struct {
 
 var Client = &http.Client{}
 
-func ReserveAcct(base_url, BearerToken, acctName, acctRef, contractcode, customerName, customerEmail string) (*ReserveAcctResponse, string, error) {
+func ReserveAcct(base_url, bearerToken, acctName, acctRef, contractcode, customerName, customerEmail string) (*ReserveAcctResponse, string, error) {
 
-	bearer_token := fmt.Sprintf("Bearer %s", BearerToken)
+	bearer_token := fmt.Sprintf("Bearer %s", bearerToken)
 	client := Client
 	url := fmt.Sprintf("%s/api/v1/bank-transfer/reserved-accounts", base_url)
 	body := []byte(fmt.Sprintf("{\n  \"accountName\": \"%s\",\n  \"accountReference\": \"%s\",\n  \"currencyCode\": \"NGN\",\n  \"contractCode\": \"%s\",\n  \"customerName\": \"%s\",\n  \"customerEmail\": \"%s\"\n}", acctName, acctRef, contractcode, customerName, customerEmail))
