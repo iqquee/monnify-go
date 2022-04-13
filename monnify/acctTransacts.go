@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/hisyntax/go-monnify/helper"
 )
 
 type AcctTransaction struct {
@@ -90,7 +92,7 @@ func GetAcctsTransact(base_url, bearerToken, acctRef string, page, size int) (*A
 	resp, err := client.Do(req)
 
 	if err != nil {
-		fmt.Println("Errored when sending request to the server")
+		fmt.Println(helper.ServerErr)
 		return nil, "", err
 	}
 

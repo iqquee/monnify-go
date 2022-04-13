@@ -7,6 +7,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"github.com/hisyntax/go-monnify/helper"
 )
 
 type AcctResponse struct {
@@ -48,7 +50,7 @@ func UpdateAcctBVN(base_url, bearerToken, acctRef, bvn string) (*AcctResponse, s
 
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println("Error occured when sending request to the server")
+		fmt.Println(helper.ServerErr)
 		log.Println(err)
 	}
 
