@@ -77,11 +77,11 @@ type Sort struct {
 	Empty    bool
 }
 
-func GetAcctsTransact(base_url, bearerToken string) (*AcctTransaction, string, error) {
+func GetAcctsTransact(base_url, bearerToken, acctRef string, page, size int) (*AcctTransaction, string, error) {
 	bearer_token := fmt.Sprintf("Bearer %s", bearerToken)
 
 	client := Client
-	url := fmt.Sprintf("%s/api/v1/bank-transfer/reserved-accounts/transactions", base_url)
+	url := fmt.Sprintf("%s/api/v1/bank-transfer/reserved-accounts/transactions?accountReference=%s&page=%d&size=%d", base_url, acctRef, page, size)
 	req, _ := http.NewRequest("GET", url, nil)
 
 	req.Header.Add("Content-Type", "application/json")
