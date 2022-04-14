@@ -9,14 +9,14 @@ import (
 	"github.com/hisyntax/go-monnify/helper"
 )
 
-type AcctTransferStatus struct {
+type AcctTransactionStatus struct {
 	RequestSuccessful bool
 	ResponseMessage   string
 	ResponseCode      string
-	ResponseBody      AcctTransferStatusBody
+	ResponseBody      AcctTransactionStatusBody
 }
 
-type AcctTransferStatusBody struct {
+type AcctTransactionStatusBody struct {
 	CreatedOn            string
 	Amount               int
 	CurrencyCode         string
@@ -28,7 +28,7 @@ type AcctTransferStatusBody struct {
 	PaymentReference     string
 }
 
-func GetAcctTransferStatus(bearerToken, base_url, transactRef string) (*AcctTransferStatus, string, error) {
+func GetAcctTransactionStatus(bearerToken, base_url, transactRef string) (*AcctTransactionStatus, string, error) {
 	bearer_token := fmt.Sprintf("Bearer %s", bearerToken)
 
 	client := Client
@@ -51,7 +51,7 @@ func GetAcctTransferStatus(bearerToken, base_url, transactRef string) (*AcctTran
 	fmt.Println(resp.Status)
 	fmt.Println(string(resp_body))
 
-	var acctTransferStatus AcctTransferStatus
-	json.Unmarshal(resp_body, &acctTransferStatus)
-	return &acctTransferStatus, resp.Status, nil
+	var acctTransactionStatus AcctTransactionStatus
+	json.Unmarshal(resp_body, &acctTransactionStatus)
+	return &acctTransactionStatus, resp.Status, nil
 }
