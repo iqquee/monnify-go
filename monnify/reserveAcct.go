@@ -75,3 +75,92 @@ func ReserveAcct(base_url, bearerToken, acctName, acctRef, contractcode, custome
 
 	return &reservedAcct, resp.Status, nil
 }
+
+type ReserveAcctLimitModel struct {
+	RequestSuccessful bool
+	ResponseMessage   string
+	ResponseCode      string
+	ResponseBody      ReserveAcctLimitBody
+}
+
+type ReserveAcctLimitBody struct {
+	ContractCode         string
+	AccountReference     string
+	AccountName          string
+	CurrencyCode         string
+	CustomerEmail        string
+	CustomerName         string
+	AccountNumber        string
+	BankName             string
+	BankCode             string
+	ReservationReference string
+	Status               string
+	CreatedOn            string
+	LimitProfileConfig   ReserveAcctLimitBodyConfig
+}
+
+type ReserveAcctLimitBodyConfig struct {
+	LimitProfileCode       string
+	SingleTransactionValue int
+	DailyTransactionVolume int
+	DailyTransactionValue  int
+}
+
+func ReserveAcctLimit(bearerToken, base_url, contractCode, accountName, accountReference, customerEmail, customerName, limitProfileCode string) (*ReserveAcctLimitModel, string, error) {
+	bearer_token := fmt.Sprintf("Bearer %s", bearerToken)
+	client := Client
+
+	body := []byte(fmt.Sprintf("{\n  \"contractCode\": \"%s\",\n  \"accountName\": \"%s \",\n  \"currencyCode\": \"NGN\",\n  \"accountReference\": \"%s\",\n  \"customerEmail\": \"%s\",\n  \"customerName\": \"%s\",\n  \"limitProfileCode\": \"%s\"\n}", contractCode, accountName, accountReference, customerEmail, customerName, limitProfileCode))
+	url := fmt.Sprintf("%s/api/v1/bank-transfer/reserved-accounts/limit", base_url)
+	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(body))
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Authorization", bearer_token)
+
+	resp, err := client.Do(req)
+
+	if err != nil {
+		log.Println(helper.ServerErr)
+		return nil, "", err
+	}
+
+	defer resp.Body.Close()
+	resp_body, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Println(resp.Status)
+	fmt.Println(string(resp_body))
+
+	var reserveAcctLimitModel ReserveAcctLimitModel
+	json.Unmarshal(resp_body, &reserveAcctLimitModel)
+	return &reserveAcctLimitModel, resp.Status, nil
+}
+
+func UpdateReserveAcctLimit(bearerToken, base_url, accountReference, limitProfileCode string) (*ReserveAcctLimitModel, string, error) {
+	bearer_token := fmt.Sprintf("Bearer %s", bearerToken)
+	client := Client
+
+	body := []byte(fmt.Sprintf("{\n  \"accountReference\": \"%s\",\n  \"limitProfileCode\": \"%s\"\n}", accountReference, limitProfileCode))
+
+	url := fmt.Sprintf("%s/api/v1/bank-transfer/reserved-accounts/limit", base_url)
+	req, _ := http.NewRequest("PUT", url, bytes.NewBuffer(body))
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Authorization", bearer_token)
+
+	resp, err := client.Do(req)
+
+	if err != nil {
+		log.Println(helper.ServerErr)
+		return nil, "", err
+	}
+
+	defer resp.Body.Close()
+	resp_body, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Println(resp.Status)
+	fmt.Println(string(resp_body))
+
+	var reserveAcctLimitModel ReserveAcctLimitModel
+	json.Unmarshal(resp_body, &reserveAcctLimitModel)
+	return &reserveAcctLimitModel, resp.Status, nil
+}
