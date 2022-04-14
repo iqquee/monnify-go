@@ -160,3 +160,34 @@ func SingleAuthDisbursement(basicToken, base_url, reference, authorizationCode s
 // 	fmt.Println(resp.Status)
 // 	fmt.Println(string(resp_body))
 // }
+
+func BulkAuthDisbursement(basicToken, base_url, reference, authorizationCode string) (*DisbursementModel, string, error) {
+	basic_token := fmt.Sprintf("Basic %s", basicToken)
+
+	client := Client
+
+	url := fmt.Sprintf("%s/api/v1/disbursements/batch/validate-otp", base_url)
+	body := []byte(fmt.Sprintf("{\n  \"reference\": \"%s\",\n  \"authorizationCode\": \"%s\"\n}", reference, authorizationCode))
+
+	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(body))
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Authorization", basic_token)
+
+	resp, err := client.Do(req)
+
+	if err != nil {
+		fmt.Println(helper.ServerErr)
+		return nil, "", err
+	}
+
+	defer resp.Body.Close()
+	resp_body, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Println(resp.Status)
+	fmt.Println(string(resp_body))
+
+	var disbursementModel DisbursementModel
+	json.Unmarshal(resp_body, &disbursementModel)
+	return &disbursementModel, resp.Status, nil
+}
