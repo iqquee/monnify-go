@@ -29,8 +29,8 @@ type InitTransacStatusBody struct {
 	PaymentMethod        string
 }
 
-func Payment(amount, chargeFee int, base_url, cName, cEmail, cPhone, paymentRef, paymentDesc, redirectUrl, contractCode, bearerToken string) (*InitTransacStatus, string, error) {
-	bearer_token := fmt.Sprintf("Bearer %s", bearerToken)
+func ReceivePayment(BasicToken string, amount, chargeFee int, base_url, cName, cEmail, cPhone, paymentRef, paymentDesc, redirectUrl, contractCode string) (*InitTransacStatus, string, error) {
+	bearer_token := fmt.Sprintf("Basic %s", BasicToken)
 
 	client := Client
 
