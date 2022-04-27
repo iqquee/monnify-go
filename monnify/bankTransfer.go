@@ -34,8 +34,8 @@ type PayWithBankBody struct {
 	ProductInformation     string
 }
 
-func PayWithBankTransfer(bearerToken, base_url, acctRef, bankCode string) (*PayWithBank, string, error) {
-	bearer_token := fmt.Sprintf("Bearer %s", bearerToken)
+func PayWithBankTransfer(basicToken, base_url, acctRef, bankCode string) (*PayWithBank, string, error) {
+	bearer_token := fmt.Sprintf("Basic %s", basicToken)
 	client := Client
 
 	url := fmt.Sprintf("%s/api/v1/merchant/bank-transfer/init-payment", base_url)
