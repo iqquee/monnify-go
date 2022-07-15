@@ -3,6 +3,7 @@ package monnify
 import (
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -35,7 +36,7 @@ type Client struct {
 }
 
 var (
-	ServerErr = "error occured while sending request to the server"
+	ServerErr = errors.New("error occured while sending request to the server")
 
 	basicToken  string
 	bearerToken string

@@ -22,25 +22,6 @@ type AcceptPaymentModel struct {
 	PaymentDescription  string `json:"paymentDescription"`
 }
 
-type InitTransacStatus struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      InitTransacStatusBody
-}
-type InitTransacStatusBody struct {
-	TransactionReference string
-	PaymentReference     string
-	AmountPaid           string
-	TotalPayable         string
-	SettlementAmount     string
-	PaidOn               string
-	PaymentStatus        string
-	PaymentDescription   string
-	Currency             string
-	PaymentMethod        string
-}
-
 type AcceptPaymentRes struct {
 	RequestSuccessful bool
 	ResponseMessage   string
@@ -57,10 +38,29 @@ type AcceptPaymentResBody struct {
 	CheckoutUrl          string
 }
 
+type getTransacStatusRes struct {
+	RequestSuccessful bool
+	ResponseMessage   string
+	ResponseCode      string
+	ResponseBody      getTransacStatusResBody
+}
+type getTransacStatusResBody struct {
+	CreatedOn            string
+	Amount               int
+	CurrencyCode         string
+	CustomerName         string
+	CustomerEmail        string
+	PaymentDescription   string
+	PaymentStatus        string
+	TransactionReference string
+	PaymentReference     string
+}
+
 func AcceptPayment(amount int, paymentReference, paymentDesc, currencyCode, contractCode, customerName, customerEmail, customerPhoneNumber, redirectUrl string) (*AcceptPaymentRes, int, error) {
 	client := monnify.NewClient()
 	url := fmt.Sprintf("%s/api/v1/merchant/transactions/init-transaction", client.Options.BaseUrl)
 	method := "POST"
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
 	payload := AcceptPaymentModel{
 		PaymentReference:    paymentReference,
 		Amount:              amount,
@@ -94,7 +94,7 @@ func AcceptPayment(amount int, paymentReference, paymentDesc, currencyCode, cont
 	}
 
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Authorization", client.BasicToken)
+	req.Header.Add("Authorization", token)
 
 	resp, respErr := client.Http.Do(req)
 	if respErr != nil {
@@ -104,6 +104,36 @@ func AcceptPayment(amount int, paymentReference, paymentDesc, currencyCode, cont
 	defer resp.Body.Close()
 	resp_body, _ := ioutil.ReadAll(resp.Body)
 	var response AcceptPaymentRes
+	if err := json.Unmarshal(resp_body, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, resp.StatusCode, nil
+}
+
+func GetTransactionStatus(paymentRef string) (*getTransacStatusRes, int, error) {
+	client := monnify.NewClient()
+	url := fmt.Sprintf("%s/api/v1/merchant/transactions/query?paymentReference=%s", client.Options.BaseUrl, paymentRef)
+	method := "GET"
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	req, reqErr := http.NewRequest(method, url, nil)
+	if reqErr != nil {
+		return nil, 0, reqErr
+	}
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Authorization", token)
+
+	resp, err := client.Http.Do(req)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	defer resp.Body.Close()
+	resp_body, _ := ioutil.ReadAll(resp.Body)
+	var response getTransacStatusRes
+
 	if err := json.Unmarshal(resp_body, &response); err != nil {
 		return nil, 0, err
 	}
