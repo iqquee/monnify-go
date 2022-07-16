@@ -22,7 +22,7 @@ type tokenResBody struct {
 	ExpiresIn   int
 }
 
-type Options struct {
+type options struct {
 	ApiKey    string
 	SecretKey string
 	BaseUrl   string
@@ -32,7 +32,7 @@ type Client struct {
 	Http        http.Client
 	BasicToken  string
 	BearerToken string
-	Options     Options
+	Options     options
 }
 
 var (
@@ -88,6 +88,14 @@ func (c Client) Token() error {
 
 	return nil
 }
+
+func Options(apiKey, secretKey, baseUrl string) *options {
+	return &options{
+		ApiKey:    apiKey,
+		SecretKey: secretKey,
+		BaseUrl:   baseUrl,
+	}
+}
 func NewClient() *Client {
 	var client Client
 	client.Token()
@@ -95,6 +103,6 @@ func NewClient() *Client {
 		Http:        http.Client{},
 		BasicToken:  basicToken,
 		BearerToken: bearerToken,
-		Options:     Options{},
+		Options:     options{},
 	}
 }
