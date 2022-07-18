@@ -32,25 +32,29 @@ type Client struct {
 	Http        http.Client
 	BasicToken  string
 	BearerToken string
-	Options     options
+	BaseUrl     string
 }
 
 var (
 	ServerErr = errors.New("error occured while sending request to the server")
 
+	httpClient  http.Client
 	basicToken  string
 	bearerToken string
+	baseUrl     string
+	apiKey      string
+	secretKey   string
 )
 
 func (c Client) BasicTokenGen() {
-	text := fmt.Sprintf("%s:%s", c.Options.ApiKey, c.Options.SecretKey)
+	text := fmt.Sprintf("%s:%s", apiKey, secretKey)
 	encodedText := base64.StdEncoding.EncodeToString([]byte(text))
 	basicToken = encodedText
 }
 
 func (c Client) BearerTokenGen() (*tokenRes, error) {
-	client := NewClient()
-	url := fmt.Sprintf("%s/api/v1/auth/login/", client.Options.BaseUrl)
+	client := httpClient
+	url := fmt.Sprintf("%s/api/v1/auth/login/", baseUrl)
 	method := "POST"
 
 	req, reqErr := http.NewRequest(method, url, nil)
@@ -61,7 +65,7 @@ func (c Client) BearerTokenGen() (*tokenRes, error) {
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Authorization", fmt.Sprintf("Basic %s", basicToken))
 
-	resp, err := client.Http.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		log.Println(ServerErr)
 		return nil, err
@@ -82,6 +86,7 @@ func (c Client) Token() error {
 	c.BasicTokenGen()
 	genBearerToken, err := c.BearerTokenGen()
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 	bearerToken = genBearerToken.ResponseBody.AccessToken
@@ -89,20 +94,19 @@ func (c Client) Token() error {
 	return nil
 }
 
-func Options(apiKey, secretKey, baseUrl string) *options {
-	return &options{
-		ApiKey:    apiKey,
-		SecretKey: secretKey,
-		BaseUrl:   baseUrl,
-	}
+func Options(apikey, secretkey, baseurl string) {
+	apiKey = apikey
+	secretKey = secretkey
+	baseUrl = baseurl
 }
+
 func NewClient() *Client {
 	var client Client
 	client.Token()
 	return &Client{
-		Http:        http.Client{},
+		Http:        httpClient,
 		BasicToken:  basicToken,
 		BearerToken: bearerToken,
-		Options:     options{},
+		BaseUrl:     baseUrl,
 	}
 }
