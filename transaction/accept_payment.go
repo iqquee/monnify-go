@@ -46,7 +46,7 @@ type getTransacStatusRes struct {
 }
 type getTransacStatusResBody struct {
 	CreatedOn            string
-	Amount               int
+	Amount               float64
 	CurrencyCode         string
 	CustomerName         string
 	CustomerEmail        string
