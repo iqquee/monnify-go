@@ -7,7 +7,7 @@ Monnify is a payment gateway for businesses to accept payments from customers, e
 
 # Get Started
 - In other to use this package, you need to first create an account with monnify via https://app.monnify.com/create-account 
-- After your account have been successfully created, locate the developer option on the bottom left of your dashboard to get your:
+- After your account have been successfully created, locate the developer option at the bottom left of your dashboard to get your:
 1. Api key
 2. Secret Key
 3. Contract code
