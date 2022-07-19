@@ -1,5 +1,5 @@
-# go-monnify
-Go-monnify is a Go library that allows you to integrate the MONNIFY payment system into your Go project.
+# monnify-go
+Monnify-go is a Go library that allows you to integrate the MONNIFY payment system into your Go project.
 Monnify is a payment gateway for businesses to accept payments from customers, either on a recurring or one-time basis. Monnify offers an easier, faster and cheaper way for businesses to get paid on their web and mobile applications using convenient payment methods for customers with the highest success rates obtainable in Nigeria
 
 # Please ensure to create issues in this repo if :
@@ -14,13 +14,13 @@ Monnify is a payment gateway for businesses to accept payments from customers, e
 
 # Installation
 To install this monnify package, you need to install [Go](https://golang.org/) and set your Go workspace first.
-1. You can use the below Go command to install go-monnify
+1. You can use the below Go command to install monnify-go
 ```sh
-$ go get -u github.com/hisyntax/go-monnify
+$ go get -u github.com/hisyntax/monnify-go
 ```
 2. Import it in your code:
 ```sh
-import "github.com/hisyntax/go-monnify"
+import "github.com/hisyntax/monnify-go"
 ```
 ## Note : All methods in this package returns three (3) things:
 - [x] The object of the response
@@ -34,14 +34,14 @@ $ touch example.go
 # open the just created example.go file in the text editor of your choice
 ```
 ## Accept Payment
-Use this to accept payments from users
+Use this to accept payments from customers
 ```go
 package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/go-monnify"
-	"github.com/hisyntax/go-monnify/transaction"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
 )
 
 func main() {
@@ -75,8 +75,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/go-monnify"
-	"github.com/hisyntax/go-monnify/transaction"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
 )
 
 func main() {
@@ -102,8 +102,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/go-monnify"
-	"github.com/hisyntax/go-monnify/transaction"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
 )
 
 func main() {
@@ -136,8 +136,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/go-monnify"
-	"github.com/hisyntax/go-monnify/transaction"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
 )
 
 func main() {
