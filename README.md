@@ -25,3 +25,45 @@ import "github.com/hisyntax/go-monnify"
 - [x] The object of the response
 - [x] An int (status code)
 - [x] An error (if any)
+
+# Quick start
+```sh
+# assume the following codes in example.go file
+$ touch example.go
+# open the just created example.go file in the text editor of your choice
+```
+## Accept Payment
+Use this to accept payments from users
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/go-monnify"
+	"github.com/hisyntax/go-monnify/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	amount := 100 
+	paymentReference := "ref123"
+	paymentDesc := "test payment"
+	currencyCode := "NGN"
+	contractCode := "4000910988"
+	customerName := "john doe"
+	customerEmail := "johbdoe@gmail.com"
+	customerNumber := "09132600841" 
+	redirectUrl := "https://google.com" // test redirect url
+	res, status, err := transaction.AcceptPayment(amount,paymentReference , paymentDesc, currencyCode, contractCode, customerName, customerEmail, customerNumber, redirectUrl)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
