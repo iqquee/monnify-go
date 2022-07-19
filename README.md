@@ -67,3 +67,30 @@ func main() {
 	fmt.Println(res)
 }
 ```
+## Get Accepted Payment Status
+Use this to get accepted payment status
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/go-monnify"
+	"github.com/hisyntax/go-monnify/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	paymentReference := "ref123"
+	res, status, err := transaction.GetTransactionStatus(paymentReference)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
