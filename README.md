@@ -94,3 +94,64 @@ func main() {
 	fmt.Println(res)
 }
 ```
+## Initiate Single Transfer
+Use this to initiate single transfers
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/go-monnify"
+	"github.com/hisyntax/go-monnify/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	amount := 100
+	paymentReference := "ref123"
+	narration := "example transaction"
+	bankCode := "058" // for GT Bank
+	currency := "NGN"
+	accountNumber := ""
+	walletId := ""
+	res, status, err := transaction.InitiateSingleTransfer(amount, paymentReference, narration, currency, bankCode, accountNumber, walletId)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
+## Initiate Single Transfer Status
+Use this to get the initiated single transfer status
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/go-monnify"
+	"github.com/hisyntax/go-monnify/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	paymentReference := "ref123"
+	res, status, err := transaction.GetInitiateSingleTransferStatus(paymentReference)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
