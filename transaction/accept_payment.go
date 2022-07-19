@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/hisyntax/go-monnify"
+	"github.com/hisyntax/monnify-go"
 )
 
 type AcceptPaymentModel struct {
