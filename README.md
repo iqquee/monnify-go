@@ -1,5 +1,6 @@
 # go-monnify
-A monnify library written in golang to enable the interaction with the monnify API 
+Go-monnify is a Go library that allows you to integrate the MONNIFY payment system into your Go project.
+Monnify is a payment gateway for businesses to accept payments from customers, either on a recurring or one-time basis. Monnify offers an easier, faster and cheaper way for businesses to get paid on their web and mobile applications using convenient payment methods for customers with the highest success rates obtainable in Nigeria
 
 # Please ensure to create issues in this repo if :
 - You encounter any error while using this package and that issue would be attended to immediately.
