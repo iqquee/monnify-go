@@ -54,10 +54,10 @@ func main() {
 	paymentReference := "ref123"
 	paymentDesc := "test payment"
 	currencyCode := "NGN"
-	contractCode := "4000910988"
-	customerName := "john doe"
-	customerEmail := "johbdoe@gmail.com"
-	customerNumber := "09132600841" 
+	contractCode := ""
+	customerName := ""
+	customerEmail := ""
+	customerNumber := "" 
 	redirectUrl := "https://google.com" // test redirect url
 	res, status, err := transaction.AcceptPayment(amount,paymentReference , paymentDesc, currencyCode, contractCode, customerName, customerEmail, customerNumber, redirectUrl)
 	if err != nil {
