@@ -238,3 +238,43 @@ func main() {
 }
 ```
 
+## Get Reserved Account Transactions 
+Use this to get reserved account transactions
+### Use this object payload to implement the GetReservedAcctTransactions() method
+
+Note: IncomeSplitConfig is optional
+```go
+type GetReservedAcctTransactionsReq struct {
+	AccountReference string
+	Page             string
+	Size             string
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/account"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	//assign the necessary fields with values for the request
+	payload := account.GetReservedAcctTransactionsReq{}
+	res, status, err := account.GetReservedAcctTransactions(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
