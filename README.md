@@ -184,3 +184,58 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Create Reserved Account
+Use this to create a reserved account
+### This method takes in an object payload
+```go
+type CreateReservedAcctReq struct {
+	AccountName       string `json:"accountName"`
+	AccountReference  string `json:"accountReference"`
+	CurrencyCode      string `json:"currencyCode"`
+	ContractCode      string `json:"contractCode"`
+	CustomerName      string `json:"customerName"`
+	CustomerEmail     string `json:"customerEmail"`
+	IncomeSplitConfig []IncomeSplitConfigReqBody
+}
+
+type IncomeSplitConfigReqBody struct {
+	SubAccountCode  string `json:"subAccountCode"`
+	SplitPercentage int    `json:"splitPercentage"`
+	FeePercentage   int    `json:"feePercentage"`
+	FeeBearer       bool   `json:"feeBearer"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/account"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	//fill out the fields in the model below
+	payload := account.CreateReservedAcctReq{}
+
+	transactionReference := "ref123"
+	bankCode := "058"
+	res, status, err := account.CreateReservedAcct(transactionReference, bankCode)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
