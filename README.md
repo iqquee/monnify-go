@@ -187,7 +187,9 @@ func main() {
 
 ## Create Reserved Account
 Use this to create a reserved account
-### This method takes in an object payload
+### Use this object payload to implement the CreateReservedAcct() method
+
+Note: IncomeSplitConfig is optional
 ```go
 type CreateReservedAcctReq struct {
 	AccountName       string `json:"accountName"`
@@ -224,7 +226,7 @@ func main() {
 	baseUrl := "https://sandbox.monnify.com" // for test
 	monnify.Options(apiKey, secretKey, baseUrl)
 	
-	//fill out the fields in the model below inother to reserve an account
+	//assign the necessary fields with values for the request
 	payload := account.CreateReservedAcctReq{}
 	res, status, err := account.CreateReservedAcct(payload)
 	if err != nil {
