@@ -17,7 +17,7 @@ type CreateReservedAcctReq struct {
 	ContractCode      string `json:"contractCode"`
 	CustomerName      string `json:"customerName"`
 	CustomerEmail     string `json:"customerEmail"`
-	IncomeSplitConfig []IncomeSplitConfigReqBody
+	IncomeSplitConfig IncomeSplitConfigReqBody
 }
 
 type IncomeSplitConfigReqBody struct {

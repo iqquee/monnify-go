@@ -196,7 +196,7 @@ type CreateReservedAcctReq struct {
 	ContractCode      string `json:"contractCode"`
 	CustomerName      string `json:"customerName"`
 	CustomerEmail     string `json:"customerEmail"`
-	IncomeSplitConfig []IncomeSplitConfigReqBody
+	IncomeSplitConfig IncomeSplitConfigReqBody
 }
 
 type IncomeSplitConfigReqBody struct {
@@ -224,12 +224,9 @@ func main() {
 	baseUrl := "https://sandbox.monnify.com" // for test
 	monnify.Options(apiKey, secretKey, baseUrl)
 	
-	//fill out the fields in the model below
+	//fill out the fields in the model below inother to reserve an account
 	payload := account.CreateReservedAcctReq{}
-
-	transactionReference := "ref123"
-	bankCode := "058"
-	res, status, err := account.CreateReservedAcct(transactionReference, bankCode)
+	res, status, err := account.CreateReservedAcct(payload)
 	if err != nil {
 		fmt.Println(err)
 	}
