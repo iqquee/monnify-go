@@ -242,7 +242,6 @@ func main() {
 Use this to get reserved account transactions
 ### Use this object payload to implement the GetReservedAcctTransactions() method
 
-Note: IncomeSplitConfig is optional
 ```go
 type GetReservedAcctTransactionsReq struct {
 	AccountReference string
