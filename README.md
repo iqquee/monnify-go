@@ -156,3 +156,32 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Pay with Bank Transfer
+Use this to make payment using bank ussd code
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	transactionReference := "ref123"
+	bankCode := "058"
+	res, status, err := transaction.PayWithBank(transactionReference, bankCode)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```

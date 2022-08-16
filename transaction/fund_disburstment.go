@@ -57,7 +57,7 @@ type getInitiateSingleTransferStatusResBody struct {
 
 func InitiateSingleTransfer(amount, bankCode, accountNumber int, reference, narration, currency, walletId string) (*initiateSingleTransferRes, int, error) {
 	client := monnify.NewClient()
-	url := fmt.Sprintf("%s/api/v1/disbursements/single", client.BaseUrl)
+	url := fmt.Sprintf("%s/disbursements/single", client.BaseUrl)
 	method := "POST"
 	token := fmt.Sprintf("Basic %s", client.BasicToken)
 	payload := initiateSingleTransferModel{
@@ -100,7 +100,7 @@ func InitiateSingleTransfer(amount, bankCode, accountNumber int, reference, narr
 
 func GetInitiateSingleTransferStatus(paymentRef string) (*getInitiateSingleTransferStatusRes, int, error) {
 	client := monnify.NewClient()
-	url := fmt.Sprintf("%s/api/v1/disbursements/single/summary?reference=?reference=%s", client.BaseUrl, paymentRef)
+	url := fmt.Sprintf("%s/disbursements/single/summary?reference=?reference=%s", client.BaseUrl, paymentRef)
 	method := "GET"
 	token := fmt.Sprintf("Basic %s", client.BasicToken)
 

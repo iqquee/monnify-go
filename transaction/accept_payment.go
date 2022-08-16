@@ -58,7 +58,7 @@ type getTransacStatusResBody struct {
 
 func AcceptPayment(amount int, paymentReference, paymentDesc, currencyCode, contractCode, customerName, customerEmail, customerPhoneNumber, redirectUrl string) (*AcceptPaymentRes, int, error) {
 	client := monnify.NewClient()
-	url := fmt.Sprintf("%s/api/v1/merchant/transactions/init-transaction", client.BaseUrl)
+	url := fmt.Sprintf("%s/merchant/transactions/init-transaction", client.BaseUrl)
 	method := "POST"
 	token := fmt.Sprintf("Basic %s", client.BasicToken)
 	payload := AcceptPaymentModel{
@@ -103,7 +103,7 @@ func AcceptPayment(amount int, paymentReference, paymentDesc, currencyCode, cont
 
 func GetTransactionStatus(paymentRef string) (*getTransacStatusRes, int, error) {
 	client := monnify.NewClient()
-	url := fmt.Sprintf("%s/api/v1/merchant/transactions/query?paymentReference=%s", client.BaseUrl, paymentRef)
+	url := fmt.Sprintf("%s/merchant/transactions/query?paymentReference=%s", client.BaseUrl, paymentRef)
 	method := "GET"
 	token := fmt.Sprintf("Basic %s", client.BasicToken)
 

@@ -97,7 +97,7 @@ func (c Client) Token() error {
 func Options(apikey, secretkey, baseurl string) {
 	apiKey = apikey
 	secretKey = secretkey
-	baseUrl = baseurl
+	baseUrl = baseurl + "/api/v1"
 }
 
 func NewClient() *Client {
