@@ -300,9 +300,40 @@ func main() {
 	baseUrl := "https://sandbox.monnify.com" // for test
 	monnify.Options(apiKey, secretKey, baseUrl)
 	
-	//assign the necessary fields with values for the request
 	accountRef := "red123"
 	res, status, err := account.GetReservedAccountSampleRequest(accountRef)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
+
+## Delete Reserved Account Sample Request
+Use this to delete a reserved account sample request
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/account"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	accountRef := "red123"
+	res, status, err := account.DeleteReservedAccountSampleRequest(accountRef)
 	if err != nil {
 		fmt.Println(err)
 	}

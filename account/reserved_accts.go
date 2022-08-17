@@ -174,3 +174,55 @@ func GetReservedAccountSampleRequest(accountRef string) (*GetReservedAccountSamp
 
 	return &response, resp.StatusCode, nil
 }
+
+type DeleteReservedAccountSampleRes struct {
+	RequestSuccessful bool
+	ResponseMessage   string
+	ResponseCode      string
+	ResponseBody      DeleteReservedAccountSampleResBody
+}
+
+type DeleteReservedAccountSampleResBody struct {
+	ContractCode         string
+	AccountReference     string
+	AccountName          string
+	CurrencyCode         string
+	CustomerEmail        string
+	CustomerName         string
+	AccountNumber        string
+	BankName             string
+	BankCode             string
+	ReservationReference string
+	Status               string
+	CreatedOn            string
+}
+
+func DeleteReservedAccountSampleRequest(accountRef string) (*DeleteReservedAccountSampleRes, int, error) {
+	client := monnify.NewClient()
+	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts/%s", client.BaseUrl, accountRef)
+	method := "DELETE"
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	req, reqErr := http.NewRequest(method, url, nil)
+	if reqErr != nil {
+		return nil, 0, reqErr
+	}
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Authorization", token)
+
+	resp, err := client.Http.Do(req)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	defer resp.Body.Close()
+	resp_body, _ := ioutil.ReadAll(resp.Body)
+	var response DeleteReservedAccountSampleRes
+
+	if err := json.Unmarshal(resp_body, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, resp.StatusCode, nil
+}
