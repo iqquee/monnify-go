@@ -114,3 +114,63 @@ func GetReservedAcctTransactions(payload GetReservedAcctTransactionsReq) (*GetRe
 
 	return &response, resp.StatusCode, nil
 }
+
+type GetReservedAccountSampleRes struct {
+	RequestSuccessful bool
+	ResponseMessage   string
+	ResponseCode      string
+	ResponseBody      GetReservedAccountSampleResBody
+}
+
+type GetReservedAccountSampleResBody struct {
+	ContractCode         string
+	AccountReference     string
+	AccountName          string
+	CurrencyCode         string
+	CustomerEmail        string
+	CustomerName         string
+	AccountNumber        string
+	BankName             string
+	BankCode             string
+	ReservationReference string
+	Status               string
+	CreatedOn            string
+	Contract             struct {
+		Name                                       string
+		Code                                       string
+		Description                                interface{}
+		SupportsAdvancedSettlementAccountSelection string
+	}
+	TotalAmount      int
+	TransactionCount int
+}
+
+func GetReservedAccountSampleRequest(accountRef string) (*GetReservedAccountSampleRes, int, error) {
+	client := monnify.NewClient()
+	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts/%s", client.BaseUrl, accountRef)
+	method := "GET"
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	req, reqErr := http.NewRequest(method, url, nil)
+	if reqErr != nil {
+		return nil, 0, reqErr
+	}
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Authorization", token)
+
+	resp, err := client.Http.Do(req)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	defer resp.Body.Close()
+	resp_body, _ := ioutil.ReadAll(resp.Body)
+	var response GetReservedAccountSampleRes
+
+	if err := json.Unmarshal(resp_body, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, resp.StatusCode, nil
+}
