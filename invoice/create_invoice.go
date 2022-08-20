@@ -58,7 +58,7 @@ type CreateInvoiceResBody struct {
 
 func CreateInvoice(payload CreateInvoiceReq) (*CreateInvoiceRes, int, error) {
 	client := monnify.NewClient()
-	url := fmt.Sprintf("%s/merchant/transactions/init-transaction", client.BaseUrl)
+	url := fmt.Sprintf("%s/invoice/create", client.BaseUrl)
 	method := "POST"
 	token := fmt.Sprintf("Basic %s", client.BasicToken)
 
