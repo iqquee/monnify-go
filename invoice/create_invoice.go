@@ -71,3 +71,70 @@ func CreateInvoice(payload CreateInvoiceReq) (*CreateInvoiceRes, int, error) {
 
 	return &response, status, nil
 }
+
+func GetInvoiceDetailsRequest(invoiceRef string) (*CreateInvoiceRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodGet
+	isPayload := false
+	payload := ""
+	url := fmt.Sprintf("%s/invoice//details?invoiceReference=%s", client.BaseUrl, invoiceRef)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var response CreateInvoiceRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
+
+type GetAllInvoiceDetailsRequestRes struct {
+	RequestSuccessful bool
+	ResponseMessage   string
+	ResponseCode      string
+	ResponseBody      []GetAllInvoiceDetailsRequestResBody
+}
+
+type GetAllInvoiceDetailsRequestResBody struct {
+	Amount           int
+	InvoiceReference string
+	InvoiceStatus    string
+	Description      string
+	ContractCode     string
+	CustomerEmail    string
+	CustomerName     string
+	ExpiryDate       string
+	CreatedBy        string
+	CreatedOn        string
+	CheckoutUrl      string
+	AccountNumber    string
+	AccountName      string
+	BankName         string
+	BankCode         string
+}
+
+func GetAllInvoiceDetailsRequest() (*GetAllInvoiceDetailsRequestRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodGet
+	isPayload := false
+	payload := ""
+	url := fmt.Sprintf("%s/invoice/all", client.BaseUrl)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var response GetAllInvoiceDetailsRequestRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}

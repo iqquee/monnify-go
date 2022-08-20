@@ -420,3 +420,65 @@ func main() {
 	fmt.Println(status)
 	fmt.Println(res)
 }
+```
+
+## Get Invoice Details Request
+Use this to get invoice details request
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/invoice"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	invoiceRef := "ref123"
+	res, status, err := invoice.GetInvoiceDetailsRequest(invoiceRef)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
+## Get All Invoice Details Request
+Use this to get all invoice details request
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/invoice"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	res, status, err := invoice.GetAllInvoiceDetailsRequest()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
