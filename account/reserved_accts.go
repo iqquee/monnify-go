@@ -14,73 +14,73 @@ type GetReservedAcctTransactionsReq struct {
 }
 
 type GetReservedAcctTransactionsRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      GetReservedAcctTransactionsResBody
+	RequestSuccessful bool                               `json:"requestSuccessful"`
+	ResponseMessage   string                             `json:"responseMessage"`
+	ResponseCode      string                             `json:"responseCode"`
+	ResponseBody      GetReservedAcctTransactionsResBody `json:"responseBody"`
 }
 
 type GetReservedAcctTransactionsResBody struct {
-	Content  []contentBody
+	Content  []contentBody `json:"content"`
 	Pageable struct {
 		Sort struct {
-			Sorted   bool
-			Unsorted bool
-			Empty    bool
-		}
-		PageSize   int
-		PageNumber int
-		Offset     int
-		Unpaged    bool
-		Paged      bool
-	}
-	TotalPages    int
-	Last          bool
-	TotalElements int
+			Sorted   bool `json:"sorted"`
+			Unsorted bool `json:"unsorted"`
+			Empty    bool `json:"empty"`
+		} `json:"sort"`
+		PageSize   int  `json:"pagesize"`
+		PageNumber int  `json:"pagenumber"`
+		Offset     int  `json:"offset"`
+		Unpaged    bool `json:"unpaged"`
+		Paged      bool `json:"paged"`
+	} `json:"pageable"`
+	TotalPages    int  `json:"totalPages"`
+	Last          bool `json:"last"`
+	TotalElements int  `json:"totalElements"`
 	Sort          struct {
-		Sorted   bool
-		Unsorted bool
-		Empty    bool
-	}
-	First            bool
-	NumberOfElements int
-	Size             int
-	Number           int
-	Empty            bool
+		Sorted   bool `json:"sorted"`
+		Unsorted bool `json:"unsorted"`
+		Empty    bool `json:"empty"`
+	} `json:"sort"`
+	First            bool `json:"first"`
+	NumberOfElements int  `json:"numberOfElements"`
+	Size             int  `json:"size"`
+	Number           int  `json:"number"`
+	Empty            bool `json:"empty"`
 }
 
 type contentBody struct {
-	CustomerDTO          customerDTO
-	ProviderAmount       int
-	PaymentMethod        string
-	CreatedOn            string
-	Amount               int
-	Flagged              bool
-	ProviderCode         string
-	Fee                  int
-	CurrencyCode         string
-	CompletedOn          string
-	PaymentDescription   string
-	PaymentStatus        string
-	TransactionReference string
-	PaymentReference     string
-	MerchantCode         string
-	MerchantName         string
-	SettleInstantly      bool
-	PayableAmount        int
-	AmountPaid           int
-	Completed            bool
-	PaymentMethodList    interface{}
-	CollectionChannel    string
-	AccountReference     string
-	AccountNumber        string
-	CustomerEmail        string
-	CustomerName         string
+	CustomerDTO          customerDTO `json:"customerDTO"`
+	ProviderAmount       int         `json:"providerAmount"`
+	PaymentMethod        string      `json:"paymentMethod"`
+	CreatedOn            string      `json:"createdOn"`
+	Amount               int         `json:"amount"`
+	Flagged              bool        `json:"flagged"`
+	ProviderCode         string      `json:"providerCode"`
+	Fee                  int         `json:"fee"`
+	CurrencyCode         string      `json:"currencyCode"`
+	CompletedOn          string      `json:"completedOn"`
+	PaymentDescription   string      `json:"paymentDescription"`
+	PaymentStatus        string      `json:"paymentStatus"`
+	TransactionReference string      `json:"transactionReference"`
+	PaymentReference     string      `json:"paymentReference"`
+	MerchantCode         string      `json:"merchantCode"`
+	MerchantName         string      `json:"merchantName"`
+	SettleInstantly      bool        `json:"settleInstantly"`
+	PayableAmount        int         `json:"payableAmount"`
+	AmountPaid           int         `json:"amountPaid"`
+	Completed            bool        `json:"completed"`
+	PaymentMethodList    interface{} `json:"paymentMethodList"`
+	CollectionChannel    string      `json:"collectionChannel"`
+	AccountReference     string      `json:"accountReference"`
+	AccountNumber        string      `json:"accountNumber"`
+	CustomerEmail        string      `json:"customerEmail"`
+	CustomerName         string      `json:"customerName"`
 }
 type customerDTO struct {
-	Email        string
-	Name         string
-	MerchantCode string
+	Email        string `json:"email"`
+	Name         string `json:"name"`
+	MerchantCode string `json:"merchantCode"`
 }
 
 func GetReservedAcctTransactions(payload GetReservedAcctTransactionsReq) (*GetReservedAcctTransactionsRes, int, error) {
@@ -103,33 +103,33 @@ func GetReservedAcctTransactions(payload GetReservedAcctTransactionsReq) (*GetRe
 }
 
 type GetReservedAccountSampleRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
 	ResponseBody      GetReservedAccountSampleResBody
 }
 
 type GetReservedAccountSampleResBody struct {
-	ContractCode         string
-	AccountReference     string
-	AccountName          string
-	CurrencyCode         string
-	CustomerEmail        string
-	CustomerName         string
-	AccountNumber        string
-	BankName             string
-	BankCode             string
-	ReservationReference string
-	Status               string
-	CreatedOn            string
+	ContractCode         string `json:"contractCode"`
+	AccountReference     string `json:"accountReference"`
+	AccountName          string `json:"accountName"`
+	CurrencyCode         string `json:"currencyCode"`
+	CustomerEmail        string `json:"customerEmail"`
+	CustomerName         string `json:"customerName"`
+	AccountNumber        string `json:"accountNumber"`
+	BankName             string `json:"bankName"`
+	BankCode             string `json:"bankCode"`
+	ReservationReference string `json:"reservationReference"`
+	Status               string `json:"status"`
+	CreatedOn            string `json:"createdOn"`
 	Contract             struct {
-		Name                                       string
-		Code                                       string
-		Description                                interface{}
-		SupportsAdvancedSettlementAccountSelection string
-	}
-	TotalAmount      int
-	TransactionCount int
+		Name                                       string      `json:"name"`
+		Code                                       string      `json:"code"`
+		Description                                interface{} `json:"description"`
+		SupportsAdvancedSettlementAccountSelection string      `json:"supportsAdvancedSettlementAccountSelection"`
+	} `json:"contract"`
+	TotalAmount      int `json:"totalAmount"`
+	TransactionCount int `json:"transactionCount"`
 }
 
 func GetReservedAccountSampleRequest(accountRef string) (*GetReservedAccountSampleRes, int, error) {
@@ -154,25 +154,25 @@ func GetReservedAccountSampleRequest(accountRef string) (*GetReservedAccountSamp
 }
 
 type DeleteReservedAccountSampleRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      DeleteReservedAccountSampleResBody
+	RequestSuccessful bool                               `json:"requestSuccessful"`
+	ResponseMessage   string                             `json:"responseMessage"`
+	ResponseCode      string                             `json:"responseCode"`
+	ResponseBody      DeleteReservedAccountSampleResBody `json:"responseBody"`
 }
 
 type DeleteReservedAccountSampleResBody struct {
-	ContractCode         string
-	AccountReference     string
-	AccountName          string
-	CurrencyCode         string
-	CustomerEmail        string
-	CustomerName         string
-	AccountNumber        string
-	BankName             string
-	BankCode             string
-	ReservationReference string
-	Status               string
-	CreatedOn            string
+	ContractCode         string `json:"contractCode"`
+	AccountReference     string `json:"accountReference"`
+	AccountName          string `json:"accountName"`
+	CurrencyCode         string `json:"currencyCode"`
+	CustomerEmail        string `json:"customerEmail"`
+	CustomerName         string `json:"customerName"`
+	AccountNumber        string `json:"accountNumber"`
+	BankName             string `json:"bankName"`
+	BankCode             string `json:"bankCode"`
+	ReservationReference string `json:"reservationReference"`
+	Status               string `json:"status"`
+	CreatedOn            string `json:"createdOn"`
 }
 
 func DeleteReservedAccountSampleRequest(accountRef string) (*DeleteReservedAccountSampleRes, int, error) {

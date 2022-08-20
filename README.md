@@ -518,7 +518,7 @@ func main() {
 ## Create Invoice Type Reserved Account
 Use this to create invoice type reserved account
 ### Use this object payload to implement the CreateInvoiceTypeReservedAccount() method
-Note: IncomeSplitConfig is optional
+Note: reservedAccountType is "INVOICE"
 
 ```go
 type CreateInvoiceTypeReservedAccountReq struct {

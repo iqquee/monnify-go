@@ -8,27 +8,27 @@ import (
 )
 
 type PayWithBankRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      PayWithBankResBody
+	RequestSuccessful bool               `json:"requestSuccessful"`
+	ResponseMessage   string             `json:"responseMessage"`
+	ResponseCode      string             `json:"responseCode"`
+	ResponseBody      PayWithBankResBody `json:"responseBody"`
 }
 
 type PayWithBankResBody struct {
-	AccountNumber          string
-	AccountName            string
-	BankName               string
-	BankCode               string
-	AccountDurationSeconds int
-	UssdPayment            string
-	RequestTime            string
-	TransactionReference   string
-	PaymentReference       string
-	Amount                 int
-	Fee                    int
-	TotalPayable           int
-	CollectionChannel      string
-	ProductInformation     interface{}
+	AccountNumber          string      `json:"accountNumber"`
+	AccountName            string      `json:"accountName"`
+	BankName               string      `json:"bankName"`
+	BankCode               string      `json:"bankCode"`
+	AccountDurationSeconds int         `json:"accountDurationSeconds"`
+	UssdPayment            string      `json:"ussdPayment"`
+	RequestTime            string      `json:"requestTime"`
+	TransactionReference   string      `json:"transactionReference"`
+	PaymentReference       string      `json:"paymentReference"`
+	Amount                 int         `json:"amount"`
+	Fee                    int         `json:"fee"`
+	TotalPayable           int         `json:"totalPayable"`
+	CollectionChannel      string      `json:"collectionChannel"`
+	ProductInformation     interface{} `json:"productInformation"`
 }
 
 type PayWithBankReq struct {

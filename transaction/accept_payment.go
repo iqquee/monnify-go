@@ -20,37 +20,37 @@ type AcceptPaymentReq struct {
 }
 
 type AcceptPaymentRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      AcceptPaymentResBody
+	RequestSuccessful bool                 `json:"requestSuccessful"`
+	ResponseMessage   string               `json:"responseMessage"`
+	ResponseCode      string               `json:"responseCode"`
+	ResponseBody      AcceptPaymentResBody `json:"responseBody"`
 }
 
 type AcceptPaymentResBody struct {
-	TransactionReference string
-	PaymentReference     string
-	MerchantName         string
-	ApiKey               string
-	EnabledPaymentMethod []string
-	CheckoutUrl          string
+	TransactionReference string   `json:"transactionReference"`
+	PaymentReference     string   `json:"paymentReference"`
+	MerchantName         string   `json:"merchantName"`
+	ApiKey               string   `json:"apiKey"`
+	EnabledPaymentMethod []string `json:"enabledPaymentMethod"`
+	CheckoutUrl          string   `json:"checkoutUrl"`
 }
 
 type getTransacStatusRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      getTransacStatusResBody
+	RequestSuccessful bool                    `json:"requestSuccessful"`
+	ResponseMessage   string                  `json:"responseMessage"`
+	ResponseCode      string                  `json:"responseCode"`
+	ResponseBody      getTransacStatusResBody `json:"responseBody"`
 }
 type getTransacStatusResBody struct {
-	CreatedOn            string
-	Amount               float64
-	CurrencyCode         string
-	CustomerName         string
-	CustomerEmail        string
-	PaymentDescription   string
-	PaymentStatus        string
-	TransactionReference string
-	PaymentReference     string
+	CreatedOn            string  `json:"createdOn"`
+	Amount               float64 `json:"amount"`
+	CurrencyCode         string  `json:"currencyCode"`
+	CustomerName         string  `json:"customerName"`
+	CustomerEmail        string  `json:"customerEmail"`
+	PaymentDescription   string  `json:"paymentDescription"`
+	PaymentStatus        string  `json:"paymentStatus"`
+	TransactionReference string  `json:"transactionReference"`
+	PaymentReference     string  `json:"paymentReference"`
 }
 
 func AcceptPayment(payload AcceptPaymentReq) (*AcceptPaymentRes, int, error) {

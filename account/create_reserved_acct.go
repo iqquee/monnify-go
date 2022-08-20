@@ -25,25 +25,25 @@ type IncomeSplitConfigReqBody struct {
 }
 
 type CreateReservedAcctRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      CreateReservedAcctResBody
+	RequestSuccessful bool                      `json:"requestSuccessful"`
+	ResponseMessage   string                    `json:"responseMessage"`
+	ResponseCode      string                    `json:"responseCode"`
+	ResponseBody      CreateReservedAcctResBody `json:"responseBody"`
 }
 
 type CreateReservedAcctResBody struct {
-	ContractCode      string
-	AccountReference  string
-	AccountName       string
-	CurrencyCode      string
-	CustomerEmail     string
-	CustomerName      string
-	AccountNumber     string
-	BankName          string
-	BankCode          string
-	Status            string
-	CreatedOn         string
-	IncomeSplitConfig interface{}
+	ContractCode      string      `json:"contractCode"`
+	AccountReference  string      `json:"accountReference"`
+	AccountName       string      `json:"accountName"`
+	CurrencyCode      string      `json:"currencyCode"`
+	CustomerEmail     string      `json:"customerEmail"`
+	CustomerName      string      `json:"customerName"`
+	AccountNumber     string      `json:"accountNumber"`
+	BankName          string      `json:"bankName"`
+	BankCode          string      `json:"bankCode"`
+	Status            string      `json:"status"`
+	CreatedOn         string      `json:"createdOn"`
+	IncomeSplitConfig interface{} `json:"incomeSplitConfig"`
 }
 
 func CreateReservedAcct(payload CreateReservedAcctReq) (*CreateReservedAcctRes, int, error) {

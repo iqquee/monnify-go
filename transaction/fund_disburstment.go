@@ -18,38 +18,38 @@ type InitiateSingleTransferReq struct {
 }
 
 type initiateSingleTransferRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      initiateSingleTransferResBody
+	RequestSuccessful bool                          `json:"requestSuccessful"`
+	ResponseMessage   string                        `json:"responseMessage"`
+	ResponseCode      string                        `json:"responseCode"`
+	ResponseBody      initiateSingleTransferResBody `json:"responseBody"`
 }
 
 type initiateSingleTransferResBody struct {
-	Amount      int
-	Reference   string
-	Status      string
-	DateCreated string
+	Amount      int    `json:"amount"`
+	Reference   string `json:"reference"`
+	Status      string `json:"status"`
+	DateCreated string `json:"dateCreated"`
 }
 
 type getInitiateSingleTransferStatusRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      getInitiateSingleTransferStatusResBody
+	RequestSuccessful bool                                   `json:"requestSuccessful"`
+	ResponseMessage   string                                 `json:"responseMessage"`
+	ResponseCode      string                                 `json:"responseCode"`
+	ResponseBody      getInitiateSingleTransferStatusResBody `json:"responseBody"`
 }
 
 type getInitiateSingleTransferStatusResBody struct {
-	Amount        int
-	Reference     string
-	Narration     string
-	BankCode      string
-	AccountNumber string
-	Currency      string
-	AccountName   string
-	BankName      string
-	DateCreated   string
-	Fee           string
-	Status        string
+	Amount        int    `json:"amount"`
+	Reference     string `json:"reference"`
+	Narration     string `json:"narration"`
+	BankCode      string `json:"bankCode"`
+	AccountNumber string `json:"accountNumber"`
+	Currency      string `json:"currency"`
+	AccountName   string `json:"accountName"`
+	BankName      string `json:"bankName"`
+	DateCreated   string `json:"dateCreated"`
+	Fee           string `json:"fee"`
+	Status        string `json:"status"`
 }
 
 func InitiateSingleTransfer(payload InitiateSingleTransferReq) (*initiateSingleTransferRes, int, error) {
