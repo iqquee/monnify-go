@@ -357,3 +357,58 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Create Invoices
+Use this to create invoices
+### Use this object payload to implement the CreateInvoice() method
+Note: IncomeSplitConfig is optional
+
+```go
+type CreateInvoiceReq struct {
+	Amount            int                      `json:"amount"`
+	InvoiceReference  string                   `json:"invoiceReference"`
+	Description       string                   `json:"description"`
+	CurrencyCode      string                   `json:"currencyCode"`
+	ContractCode      string                   `json:"contractCode"`
+	CustomerEmail     string                   `josn:"customerEmail"`
+	CustomerName      string                   `json:"customerName"`
+	ExpiryDate        string                   `json:"expiryDate"`
+	RedirectUrl       string                   `josn:"redirectUrl"`
+	PaymentMethod     string                   `json:"paymentMethod"`
+	IncomeSplitConfig IncomeSplitConfigReqBody `json:"incomeSplitConfig"`
+}
+
+type IncomeSplitConfigReqBody struct {
+	SubAccountCode  string `json:"subAccountCode"`
+	SplitPercentage int    `json:"splitPercentage"`
+	FeePercentage   int    `json:"feePercentage"`
+	FeeBearer       bool   `json:"feeBearer"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/invoice"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := invoice.CreateInvoiceReq{}
+	res, status, err := invoice.CreateInvoice(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
