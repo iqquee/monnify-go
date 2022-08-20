@@ -513,3 +513,50 @@ func main() {
 	fmt.Println(status)
 	fmt.Println(res)
 }
+```
+
+## Create Invoice Type Reserved Account
+Use this to create invoice type reserved account
+### Use this object payload to implement the CreateInvoiceTypeReservedAccount() method
+Note: IncomeSplitConfig is optional
+
+```go
+type CreateInvoiceTypeReservedAccountReq struct {
+	ReservedAccountType string `json:"reservedAccountType"`
+	AccountReference    string `json:"accountReference"`
+	AccountName         string `json:"accountName"`
+	CurrencyCode        string `json:"currencyCode"`
+	ContractCode        string `json:"contractCode"`
+	CustomerEmail       string `json:"customerEmail"`
+	CustomerName        string `json:"customerName"`
+	CustomerBVN         string `json:"customerBVN"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/invoice"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := invoice.CreateInvoiceTypeReservedAccountReq{}
+	res, status, err := invoice.CreateInvoiceTypeReservedAccount(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
