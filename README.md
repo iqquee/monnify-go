@@ -482,3 +482,34 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+
+## Cancelling invoice Request
+Use this to cancel invoice request
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/invoice"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	invoiceRef := "ref123"
+	res, status, err := invoice.CancellingInvoiceRequest(invoiceRef)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}

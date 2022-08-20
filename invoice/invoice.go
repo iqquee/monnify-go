@@ -138,3 +138,24 @@ func GetAllInvoiceDetailsRequest() (*GetAllInvoiceDetailsRequestRes, int, error)
 
 	return &response, status, nil
 }
+
+func CancellingInvoiceRequest(invoiceRef string) (*CreateInvoiceRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodDelete
+	isPayload := false
+	payload := ""
+	url := fmt.Sprintf("%s/invoice/cancel?invoiceReference=%s", client.BaseUrl, invoiceRef)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var response CreateInvoiceRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
