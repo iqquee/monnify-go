@@ -1,11 +1,8 @@
 package account
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 
 	"github.com/hisyntax/monnify-go"
 )
@@ -51,35 +48,20 @@ type CreateReservedAcctResBody struct {
 
 func CreateReservedAcct(payload CreateReservedAcctReq) (*CreateReservedAcctRes, int, error) {
 	client := monnify.NewClient()
+	method := monnify.MethodPost
+	isPayload := true
 	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts", client.BaseUrl)
-	method := "POST"
-	token := fmt.Sprintf("Basic %s", client.BasicToken)
+	token := fmt.Sprintf("Bearer %s", client.BearerToken)
 
-	jsonReq, jsonReqErr := json.Marshal(&payload)
-	if jsonReqErr != nil {
-		return nil, 0, jsonReqErr
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		fmt.Println(err)
 	}
-
-	req, reqErr := http.NewRequest(method, url, bytes.NewBuffer(jsonReq))
-	if reqErr != nil {
-		return nil, 0, reqErr
-	}
-
-	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Authorization", token)
-
-	resp, respErr := client.Http.Do(req)
-	if respErr != nil {
-		return nil, 0, respErr
-	}
-
-	defer resp.Body.Close()
-	resp_body, _ := ioutil.ReadAll(resp.Body)
 	var response CreateReservedAcctRes
-	if err := json.Unmarshal(resp_body, &response); err != nil {
+	if err := json.Unmarshal(res, &response); err != nil {
 		return nil, 0, err
 	}
 
-	return &response, resp.StatusCode, nil
+	return &response, status, nil
 
 }

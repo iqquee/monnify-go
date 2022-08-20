@@ -1,6 +1,7 @@
 package monnify
 
 import (
+	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -36,7 +37,11 @@ type Client struct {
 }
 
 var (
-	ServerErr = errors.New("error occured while sending request to the server")
+	ErrServer    = errors.New("error occured while sending request to the server")
+	MethodGet    = "GET"
+	MethodPost   = "POST"
+	MethodDelete = "DELETE"
+	MethodUpdate = "PUT"
 
 	httpClient  http.Client
 	basicToken  string
@@ -67,7 +72,7 @@ func (c Client) BearerTokenGen() (*tokenRes, error) {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Println(ServerErr)
+		log.Println(ErrServer)
 		return nil, err
 	}
 
@@ -108,5 +113,52 @@ func NewClient() *Client {
 		BasicToken:  basicToken,
 		BearerToken: bearerToken,
 		BaseUrl:     baseUrl,
+	}
+}
+
+func NewRequest(method, url, token string, isPayload bool, payload interface{}) ([]byte, int, error) {
+	client := NewClient()
+
+	if isPayload {
+		jsonReq, jsonReqErr := json.Marshal(&payload)
+		if jsonReqErr != nil {
+			return nil, 0, jsonReqErr
+		}
+
+		req, reqErr := http.NewRequest(method, url, bytes.NewBuffer(jsonReq))
+		if reqErr != nil {
+			return nil, 0, reqErr
+		}
+
+		req.Header.Add("Content-Type", "application/json")
+		req.Header.Add("Authorization", token)
+
+		resp, respErr := client.Http.Do(req)
+		if respErr != nil {
+			return nil, 0, respErr
+		}
+
+		defer resp.Body.Close()
+		resp_body, _ := ioutil.ReadAll(resp.Body)
+
+		return resp_body, resp.StatusCode, nil
+	} else {
+		req, reqErr := http.NewRequest(method, url, nil)
+		if reqErr != nil {
+			return nil, 0, reqErr
+		}
+
+		req.Header.Add("Content-Type", "application/json")
+		req.Header.Add("Authorization", token)
+
+		resp, respErr := client.Http.Do(req)
+		if respErr != nil {
+			return nil, 0, respErr
+		}
+
+		defer resp.Body.Close()
+		resp_body, _ := ioutil.ReadAll(resp.Body)
+
+		return resp_body, resp.StatusCode, nil
 	}
 }

@@ -174,6 +174,15 @@ func main() {
 ```
 ## Pay with Bank Transfer
 Use this to make payment using bank ussd code
+
+### Use this object payload to implement the PayWithBank() method
+```go
+type PayWithBankReq struct {
+	TransactionReference string `json:"transactionReference"`
+	BankCode             string `json:"bankCode"`
+}
+
+```
 ```go
 package main
 
@@ -189,9 +198,8 @@ func main() {
 	baseUrl := "https://sandbox.monnify.com" // for test
 	monnify.Options(apiKey, secretKey, baseUrl)
 
-	transactionReference := "ref123"
-	bankCode := "058"
-	res, status, err := transaction.PayWithBank(transactionReference, bankCode)
+	payload := transaction.PayWithBankReq{}
+	res, status, err := transaction.PayWithBank(payload)
 	if err != nil {
 		fmt.Println(err)
 	}

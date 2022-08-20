@@ -1,11 +1,8 @@
 package invoice
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 
 	"github.com/hisyntax/monnify-go"
 )
@@ -58,34 +55,19 @@ type CreateInvoiceResBody struct {
 
 func CreateInvoice(payload CreateInvoiceReq) (*CreateInvoiceRes, int, error) {
 	client := monnify.NewClient()
+	method := monnify.MethodPost
+	isPayload := false
 	url := fmt.Sprintf("%s/invoice/create", client.BaseUrl)
-	method := "POST"
 	token := fmt.Sprintf("Basic %s", client.BasicToken)
 
-	jsonReq, jsonReqErr := json.Marshal(&payload)
-	if jsonReqErr != nil {
-		return nil, 0, jsonReqErr
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		fmt.Println(err)
 	}
-
-	req, reqErr := http.NewRequest(method, url, bytes.NewBuffer(jsonReq))
-	if reqErr != nil {
-		return nil, 0, reqErr
-	}
-
-	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Authorization", token)
-
-	resp, respErr := client.Http.Do(req)
-	if respErr != nil {
-		return nil, 0, respErr
-	}
-
-	defer resp.Body.Close()
-	resp_body, _ := ioutil.ReadAll(resp.Body)
 	var response CreateInvoiceRes
-	if err := json.Unmarshal(resp_body, &response); err != nil {
+	if err := json.Unmarshal(res, &response); err != nil {
 		return nil, 0, err
 	}
 
-	return &response, resp.StatusCode, nil
+	return &response, status, nil
 }
