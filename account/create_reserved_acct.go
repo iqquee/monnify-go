@@ -11,13 +11,13 @@ import (
 )
 
 type CreateReservedAcctReq struct {
-	AccountName       string `json:"accountName"`
-	AccountReference  string `json:"accountReference"`
-	CurrencyCode      string `json:"currencyCode"`
-	ContractCode      string `json:"contractCode"`
-	CustomerName      string `json:"customerName"`
-	CustomerEmail     string `json:"customerEmail"`
-	IncomeSplitConfig IncomeSplitConfigReqBody
+	AccountName       string                   `json:"accountName"`
+	AccountReference  string                   `json:"accountReference"`
+	CurrencyCode      string                   `json:"currencyCode"`
+	ContractCode      string                   `json:"contractCode"`
+	CustomerName      string                   `json:"customerName"`
+	CustomerEmail     string                   `json:"customerEmail"`
+	IncomeSplitConfig IncomeSplitConfigReqBody `json:"incomeSplitConfig"`
 }
 
 type IncomeSplitConfigReqBody struct {

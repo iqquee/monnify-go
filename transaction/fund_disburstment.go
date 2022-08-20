@@ -10,7 +10,7 @@ import (
 	"github.com/hisyntax/monnify-go"
 )
 
-type initiateSingleTransferModel struct {
+type InitiateSingleTransferReq struct {
 	Amount        int    `json:"amount"`
 	Reference     string `json:"reference"`
 	Narration     string `json:"narration"`
@@ -55,20 +55,11 @@ type getInitiateSingleTransferStatusResBody struct {
 	Status        string
 }
 
-func InitiateSingleTransfer(amount, bankCode, accountNumber int, reference, narration, currency, walletId string) (*initiateSingleTransferRes, int, error) {
+func InitiateSingleTransfer(payload InitiateSingleTransferReq) (*initiateSingleTransferRes, int, error) {
 	client := monnify.NewClient()
 	url := fmt.Sprintf("%s/disbursements/single", client.BaseUrl)
 	method := "POST"
 	token := fmt.Sprintf("Basic %s", client.BasicToken)
-	payload := initiateSingleTransferModel{
-		Amount:        amount,
-		Reference:     reference,
-		Narration:     narration,
-		BankCode:      bankCode,
-		Currency:      currency,
-		AccountNumber: accountNumber,
-		WalletId:      walletId,
-	}
 
 	jsonReq, jsonReqErr := json.Marshal(&payload)
 	if jsonReqErr != nil {

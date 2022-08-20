@@ -10,7 +10,7 @@ import (
 	"github.com/hisyntax/monnify-go"
 )
 
-type AcceptPaymentModel struct {
+type AcceptPaymentReq struct {
 	PaymentReference    string `json:"paymentReference"`
 	Amount              int    `json:"amount"`
 	CurrencyCode        string `json:"currencyCode"`
@@ -56,22 +56,11 @@ type getTransacStatusResBody struct {
 	PaymentReference     string
 }
 
-func AcceptPayment(amount int, paymentReference, paymentDesc, currencyCode, contractCode, customerName, customerEmail, customerPhoneNumber, redirectUrl string) (*AcceptPaymentRes, int, error) {
+func AcceptPayment(payload AcceptPaymentReq) (*AcceptPaymentRes, int, error) {
 	client := monnify.NewClient()
 	url := fmt.Sprintf("%s/merchant/transactions/init-transaction", client.BaseUrl)
 	method := "POST"
 	token := fmt.Sprintf("Basic %s", client.BasicToken)
-	payload := AcceptPaymentModel{
-		PaymentReference:    paymentReference,
-		Amount:              amount,
-		CurrencyCode:        currencyCode,
-		ContractCode:        contractCode,
-		CustomerEmail:       customerEmail,
-		CustomerName:        customerName,
-		CustomerPhoneNumber: customerPhoneNumber,
-		RedirectUrl:         redirectUrl,
-		PaymentDescription:  paymentDesc,
-	}
 
 	jsonReq, jsonReqErr := json.Marshal(&payload)
 	if jsonReqErr != nil {

@@ -23,7 +23,7 @@ $ go get -u github.com/hisyntax/monnify-go
 import "github.com/hisyntax/monnify-go"
 ```
 ## Note : All methods in this package returns three (3) things:
-- [x] The object of the response
+- [x] An object of the response
 - [x] An int (status code)
 - [x] An error (if any)
 
@@ -35,6 +35,22 @@ $ touch example.go
 ```
 ## Accept Payment
 Use this to accept payments from customers
+
+### Use this object payload to implement the AcceptPayment() method
+Note: CurrencyCode should be "NGN" for naira
+```go
+type AcceptPaymentReq struct {
+	PaymentReference    string `json:"paymentReference"`
+	Amount              int    `json:"amount"`
+	CurrencyCode        string `json:"currencyCode"`
+	ContractCode        string `json:"contractCode"`
+	CustomerEmail       string `json:"customerEmail"`
+	CustomerName        string `json:"customerName"`
+	CustomerPhoneNumber string `json:"customerPhoneNumber"`
+	RedirectUrl         string `json:"redirectUrl"`
+	PaymentDescription  string `json:"paymentDescription"`
+}
+```
 ```go
 package main
 
@@ -50,16 +66,9 @@ func main() {
 	baseUrl := "https://sandbox.monnify.com" // for test
 	monnify.Options(apiKey, secretKey, baseUrl)
 
-	amount := 100 
-	paymentReference := "ref123"
-	paymentDesc := "test payment"
-	currencyCode := "NGN"
-	contractCode := ""
-	customerName := ""
-	customerEmail := ""
-	customerNumber := "" 
-	redirectUrl := "https://google.com" // test redirect url
-	res, status, err := transaction.AcceptPayment(amount,paymentReference , paymentDesc, currencyCode, contractCode, customerName, customerEmail, customerNumber, redirectUrl)
+	payload := transaction.AcceptPaymentReq{}
+	
+	res, status, err := transaction.AcceptPayment(payload)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -97,6 +106,19 @@ func main() {
 ```
 ## Initiate Single Transfer
 Use this to initiate single transfers
+
+### Use this object payload to implement the InitiateSingleTransfer() method
+```go
+type InitiateSingleTransferReq struct {
+	Amount        int    `json:"amount"`
+	Reference     string `json:"reference"`
+	Narration     string `json:"narration"`
+	BankCode      int    `json:"bankCode"`
+	Currency      string `json:"currency"`
+	AccountNumber int    `json:"accountNumber"`
+	WalletId      string `json:"walletId"`
+}
+```
 ```go
 package main
 
@@ -112,14 +134,8 @@ func main() {
 	baseUrl := "https://sandbox.monnify.com" // for test
 	monnify.Options(apiKey, secretKey, baseUrl)
 
-	amount := 100
-	paymentReference := "ref123"
-	narration := "example transaction"
-	bankCode := "058" // for GT Bank
-	currency := "NGN"
-	accountNumber := ""
-	walletId := ""
-	res, status, err := transaction.InitiateSingleTransfer(amount, paymentReference, narration, currency, bankCode, accountNumber, walletId)
+	payload := transaction.InitiateSingleTransferReq{}
+	res, status, err := transaction.InitiateSingleTransfer(payload)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -241,7 +257,6 @@ func main() {
 ## Get Reserved Account Transactions 
 Use this to get reserved account transactions
 ### Use this object payload to implement the GetReservedAcctTransactions() method
-
 
 ```go
 type GetReservedAcctTransactionsReq struct {
