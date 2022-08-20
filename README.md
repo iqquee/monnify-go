@@ -172,7 +172,7 @@ func main() {
 	fmt.Println(res)
 }
 ```
-## Pay with Bank Transfer
+## Pay With Bank Transfer
 Use this to make payment using bank ussd code
 
 ### Use this object payload to implement the PayWithBank() method
@@ -484,7 +484,7 @@ func main() {
 ```
 
 
-## Cancelling invoice Request
+## Cancelling Invoice Request
 Use this to cancel invoice request
 
 ```go

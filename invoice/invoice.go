@@ -29,28 +29,28 @@ type IncomeSplitConfigReqBody struct {
 }
 
 type CreateInvoiceRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      CreateInvoiceResBody
+	RequestSuccessful bool                 `json:"requestSuccessful"`
+	ResponseMessage   string               `json:"responseMessage"`
+	ResponseCode      string               `json:"responseCode"`
+	ResponseBody      CreateInvoiceResBody `json:"responseBody"`
 }
 
 type CreateInvoiceResBody struct {
-	Amount           int
-	InvoiceReference string
-	InvoiceStatus    string
-	Description      string
-	ContractCode     string
-	CustomerEmail    string
-	CustomerName     string
-	ExpiryDate       string
-	CreatedBy        string
-	CreatedOn        string
-	CheckoutUrl      string
-	AccountNumber    string
-	AccountName      string
-	BankName         string
-	BankCode         string
+	Amount           int    `json:"amount"`
+	InvoiceReference string `json:"invoiceReference"`
+	InvoiceStatus    string `json:"invoiceStatus"`
+	Description      string `json:"description"`
+	ContractCode     string `json:"contractCode"`
+	CustomerEmail    string `json:"customerEmail"`
+	CustomerName     string `json:"customerName"`
+	ExpiryDate       string `json:"expiryDate"`
+	CreatedBy        string `json:"createdBy"`
+	CreatedOn        string `json:"createdOn"`
+	CheckoutUrl      string `json:"checkoutUrl"`
+	AccountNumber    string `json:"accountNumber"`
+	AccountName      string `json:"accountName"`
+	BankName         string `json:"bankName"`
+	BankCode         string `json:"bankCode"`
 }
 
 func CreateInvoice(payload CreateInvoiceReq) (*CreateInvoiceRes, int, error) {
@@ -94,28 +94,28 @@ func GetInvoiceDetailsRequest(invoiceRef string) (*CreateInvoiceRes, int, error)
 }
 
 type GetAllInvoiceDetailsRequestRes struct {
-	RequestSuccessful bool
-	ResponseMessage   string
-	ResponseCode      string
-	ResponseBody      []GetAllInvoiceDetailsRequestResBody
+	RequestSuccessful bool                                 `json:"requestSuccessful"`
+	ResponseMessage   string                               `json:"responseMessage"`
+	ResponseCode      string                               `json:"responseCode"`
+	ResponseBody      []GetAllInvoiceDetailsRequestResBody `json:"responseBody"`
 }
 
 type GetAllInvoiceDetailsRequestResBody struct {
-	Amount           int
-	InvoiceReference string
-	InvoiceStatus    string
-	Description      string
-	ContractCode     string
-	CustomerEmail    string
-	CustomerName     string
-	ExpiryDate       string
-	CreatedBy        string
-	CreatedOn        string
-	CheckoutUrl      string
-	AccountNumber    string
-	AccountName      string
-	BankName         string
-	BankCode         string
+	Amount           int    `json:"amount"`
+	InvoiceReference string `json:"invoiceReference"`
+	InvoiceStatus    string `json:"invoiceStatus"`
+	Description      string `json:"description"`
+	ContractCode     string `json:"contractCode"`
+	CustomerEmail    string `json:"customerEmail"`
+	CustomerName     string `json:"customerName"`
+	ExpiryDate       string `json:"expiryDate"`
+	CreatedBy        string `json:"createdBy"`
+	CreatedOn        string `json:"createdOn"`
+	CheckoutUrl      string `json:"checkoutUrl"`
+	AccountNumber    string `json:"accountNumber"`
+	AccountName      string `json:"accountName"`
+	BankName         string `json:"bankName"`
+	BankCode         string `json:"bankCode"`
 }
 
 func GetAllInvoiceDetailsRequest() (*GetAllInvoiceDetailsRequestRes, int, error) {
@@ -153,6 +153,60 @@ func CancellingInvoiceRequest(invoiceRef string) (*CreateInvoiceRes, int, error)
 	}
 
 	var response CreateInvoiceRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
+
+type CreateInvoiceTypeReservedAccountReq struct {
+	ReservedAccountType string `json:"reservedAccountType"`
+	AccountReference    string `json:"accountReference"`
+	AccountName         string `json:"accountName"`
+	CurrencyCode        string `json:"currencyCode"`
+	ContractCode        string `json:"contractCode"`
+	CustomerEmail       string `json:"customerEmail"`
+	CustomerName        string `json:"customerName"`
+	CustomerBVN         string `json:"customerBVN"`
+}
+
+type CreateInvoiceTypeReservedAccountRes struct {
+	RequestSuccessful bool                                    `json:"requestSuccessful"`
+	ResponseMessage   string                                  `json:"responseMessage"`
+	ResponseCode      string                                  `json:"responseCode"`
+	ResponseBody      CreateInvoiceTypeReservedAccountResBody `json:"responseBody"`
+}
+
+type CreateInvoiceTypeReservedAccountResBody struct {
+	ContractCode         string `json:"contractCode"`
+	AccountReference     string `json:"accountReference"`
+	AccountName          string `json:"accountName"`
+	CurrencyCode         string `json:"currencyCode"`
+	CustomerEmail        string `json:"customerEmail"`
+	CustomerName         string `json:"name"`
+	AccountNumber        string `json:"accountNumber"`
+	BankName             string `json:"bankName"`
+	BankCode             string `json:"bankCode"`
+	ReservationReference string `json:"reservationReference"`
+	ReservedAccountType  string `json:"reservedAccountType"`
+	Status               string `json:"status"`
+	CreatedOn            string `json:"createdOn"`
+}
+
+func CreateInvoiceTypeReservedAccount(payload CreateInvoiceTypeReservedAccountReq) (*CreateInvoiceTypeReservedAccountRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodPost
+	isPayload := true
+	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts", client.BaseUrl)
+	token := fmt.Sprintf("Bearer %s", client.BearerToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var response CreateInvoiceTypeReservedAccountRes
 	if err := json.Unmarshal(res, &response); err != nil {
 		return nil, 0, err
 	}
