@@ -681,3 +681,46 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Update a Sub Account
+Use this to update a sub account
+### Use this object payload to implement the UpdateSubAccount() method
+
+```go
+type UpdateSubAccountReq struct {
+	CurrencyCode           string `json:"currencyCode"`
+	AccountNumber          string `json:"accountNumber"`
+	SubAccountCode         string `json:"subAccountCode"`
+	BankCode               string `json:"bankCode"`
+	Email                  string `json:"email"`
+	DefaultSplitPercentage string `json:"defaultSplitPercentage"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/subacct"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := subacct.UpdateSubAccountReq{}
+	res, status, err := subacct.UpdateSubAccount(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```

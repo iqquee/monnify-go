@@ -75,3 +75,32 @@ func GetAllSubAccounts() (*CreateSubAccountRes, int, error) {
 
 	return &response, status, nil
 }
+
+type UpdateSubAccountReq struct {
+	CurrencyCode           string `json:"currencyCode"`
+	AccountNumber          string `json:"accountNumber"`
+	SubAccountCode         string `json:"subAccountCode"`
+	BankCode               string `json:"bankCode"`
+	Email                  string `json:"email"`
+	DefaultSplitPercentage string `json:"defaultSplitPercentage"`
+}
+
+func UpdateSubAccount(payload UpdateSubAccountReq) (*CreateSubAccountRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodUpdate
+	isPayload := true
+	url := fmt.Sprintf("%s/sub-accounts", client.BaseUrl)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var response CreateSubAccountRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
