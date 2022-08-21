@@ -174,6 +174,35 @@ func main() {
 }
 ```
 
+
+## Initiate Bulk Transfer Status
+Use this to get the initiated bulk transfer status
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	batchReference := "ref123"
+	res, status, err := transaction.GetInitiateBulkTransferStatus(batchReference)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
 ## Initiate Bulk Transfer
 Use this to initiate bulk transfer 
 ### Use this object payload to implement the InitiateBulkTransfer() method
