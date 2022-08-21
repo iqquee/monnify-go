@@ -44,7 +44,7 @@ func CreateSubAccount(payload CreateSubAccountReq) (*CreateSubAccountRes, int, e
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 
 	var response CreateSubAccountRes
@@ -65,7 +65,7 @@ func GetAllSubAccounts() (*CreateSubAccountRes, int, error) {
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 
 	var response CreateSubAccountRes
@@ -94,10 +94,37 @@ func UpdateSubAccount(payload UpdateSubAccountReq) (*CreateSubAccountRes, int, e
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 
 	var response CreateSubAccountRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
+
+type DeleteSubAccountRes struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+}
+
+func DeleteSubAccount(subAcctCode string) (*DeleteSubAccountRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodDelete
+	isPayload := false
+	payload := ""
+	url := fmt.Sprintf("%s/sub-accounts/?subAccountCode=%s", client.BaseUrl, subAcctCode)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response DeleteSubAccountRes
 	if err := json.Unmarshal(res, &response); err != nil {
 		return nil, 0, err
 	}

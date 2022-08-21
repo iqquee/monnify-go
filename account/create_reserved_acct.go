@@ -55,7 +55,7 @@ func CreateReservedAcct(payload CreateReservedAcctReq) (*CreateReservedAcctRes, 
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 	var response CreateReservedAcctRes
 	if err := json.Unmarshal(res, &response); err != nil {

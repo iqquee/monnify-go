@@ -62,7 +62,7 @@ func CreateInvoice(payload CreateInvoiceReq) (*CreateInvoiceRes, int, error) {
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 	var response CreateInvoiceRes
 	if err := json.Unmarshal(res, &response); err != nil {
@@ -82,7 +82,7 @@ func GetInvoiceDetailsRequest(invoiceRef string) (*CreateInvoiceRes, int, error)
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 
 	var response CreateInvoiceRes
@@ -128,7 +128,7 @@ func GetAllInvoiceDetailsRequest() (*GetAllInvoiceDetailsRequestRes, int, error)
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 
 	var response GetAllInvoiceDetailsRequestRes
@@ -149,7 +149,7 @@ func CancellingInvoiceRequest(invoiceRef string) (*CreateInvoiceRes, int, error)
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 
 	var response CreateInvoiceRes
@@ -203,7 +203,7 @@ func CreateInvoiceTypeReservedAccount(payload CreateInvoiceTypeReservedAccountRe
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 
 	var response CreateInvoiceTypeReservedAccountRes
@@ -260,7 +260,7 @@ func AttachReservedAcctToInvoice(payload AttachReservedAcctToInvoiceReq) (*Attac
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 
 	var response AttachReservedAcctToInvoiceRes

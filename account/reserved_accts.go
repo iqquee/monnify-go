@@ -92,7 +92,7 @@ func GetReservedAcctTransactions(payload GetReservedAcctTransactionsReq) (*GetRe
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 	var response GetReservedAcctTransactionsRes
 	if err := json.Unmarshal(res, &response); err != nil {
@@ -142,7 +142,7 @@ func GetReservedAccountSampleRequest(accountRef string) (*GetReservedAccountSamp
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 	var response GetReservedAccountSampleRes
 
@@ -185,7 +185,7 @@ func DeleteReservedAccountSampleRequest(accountRef string) (*DeleteReservedAccou
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 	var response DeleteReservedAccountSampleRes
 

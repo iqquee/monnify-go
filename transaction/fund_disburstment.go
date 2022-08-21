@@ -61,7 +61,7 @@ func InitiateSingleTransfer(payload InitiateSingleTransferReq) (*initiateSingleT
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 	var response initiateSingleTransferRes
 	if err := json.Unmarshal(res, &response); err != nil {
@@ -81,7 +81,7 @@ func GetInitiateSingleTransferStatus(paymentRef string) (*getInitiateSingleTrans
 
 	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
 	if err != nil {
-		fmt.Println(err)
+		return nil, 0, err
 	}
 
 	var response getInitiateSingleTransferStatusRes

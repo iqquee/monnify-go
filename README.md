@@ -724,3 +724,34 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Delete Sub Account
+Use this to delete a sub account
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/subacct"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	subAcctCode := "ref123"
+	res, status, err := subacct.DeleteSubAccount(subAcctCode)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
