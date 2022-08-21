@@ -913,3 +913,42 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Update Reserve Account with Limit
+Use this to update reserve account with limit
+### Use this object payload to implement the UpdateReserveAcctWithLimit() method
+
+```go
+type UpdateReserveAcctWithLimitReq struct {
+	AccountReference string `json:"accountReference"`
+	LimitProfileCode string `json:"limitProfileCode"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/limitprofile"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := limitprofile.UpdateReserveAcctWithLimitReq{}
+	res, status, err := limitprofile.UpdateReserveAcctWithLimit(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
