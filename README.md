@@ -227,6 +227,84 @@ func main() {
 }
 ```
 
+## Authorize Single Transfer
+Use this to authorize single transfer
+### Use this object payload to implement the AuthorizeSingleTransfer() method
+Note: The Reference field is the unique reference for a single transaction
+```go
+type AuthorizeTransferReq struct {
+	Reference         string `json:"reference"`
+	AuthorizationCode string `json:"authorizationCode"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := transaction.AuthorizeTransferReq{}
+	res, status, err := transaction.AuthorizeSingleTransfer(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
+## Authorize Bulk Transfer
+Use this to authorize bulk transfer
+### Use this object payload to implement the AuthorizeBulkTransfer() method
+Note: The Reference field is the unique reference for a single transaction
+```go
+type AuthorizeTransferReq struct {
+	Reference         string `json:"reference"`
+	AuthorizationCode string `json:"authorizationCode"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := transaction.AuthorizeTransferReq{}
+	res, status, err := transaction.AuthorizeBulkTransfer(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
 ## Pay With Bank Transfer
 Use this to make payment using bank ussd code
 

@@ -145,3 +145,60 @@ func InitiateBulkTransfer(payload InitiateBulkTransferReq) (*InitiateBulkTransfe
 
 	return &response, status, nil
 }
+
+type AuthorizeTransferReq struct {
+	Reference         string `json:"reference"`
+	AuthorizationCode string `json:"authorizationCode"`
+}
+
+type AuthorizeTransferRes struct {
+	RequestSuccessful bool                     `json:"requestSuccessful"`
+	ResponseMessage   string                   `json:"responseMessage"`
+	ResponseCode      string                   `json:"responseCode"`
+	ResponseBody      AuthorizeTransferResBody `json:"responseBody"`
+}
+
+type AuthorizeTransferResBody struct {
+	Amount      string `json:"amount"`
+	Reference   string `json:"reference"`
+	Status      string `json:"status"`
+	DateCreated string `json:"dateCreated"`
+}
+
+func AuthorizeSingleTransfer(payload AuthorizeTransferReq) (*AuthorizeTransferRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodPost
+	isPayload := true
+	url := fmt.Sprintf("%s/disbursements/single/validate-otp", client.BaseUrl)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+	var response AuthorizeTransferRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
+
+func AuthorizeBulkTransfer(payload AuthorizeTransferReq) (*AuthorizeTransferRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodPost
+	isPayload := true
+	url := fmt.Sprintf("%s/disbursements/batch/validate-otp", client.BaseUrl)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+	var response AuthorizeTransferRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
