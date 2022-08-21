@@ -18,10 +18,10 @@ type CreateSubAccountReq struct {
 }
 
 type CreateSubAccountRes struct {
-	RequestSuccessful bool                    `json:"requestSuccessful"`
-	ResponseMessage   string                  `json:"responseMessage"`
-	ResponseCode      string                  `json:"responseCode"`
-	ResponseBody      CreateSubAccountResBody `json:"responseBody"`
+	RequestSuccessful bool                      `json:"requestSuccessful"`
+	ResponseMessage   string                    `json:"responseMessage"`
+	ResponseCode      string                    `json:"responseCode"`
+	ResponseBody      []CreateSubAccountResBody `json:"responseBody"`
 }
 
 type CreateSubAccountResBody struct {
@@ -39,6 +39,27 @@ func CreateSubAccount(payload CreateSubAccountReq) (*CreateSubAccountRes, int, e
 	client := monnify.NewClient()
 	method := monnify.MethodPost
 	isPayload := true
+	url := fmt.Sprintf("%s/sub-accounts", client.BaseUrl)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var response CreateSubAccountRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
+
+func GetAllSubAccounts() (*CreateSubAccountRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodGet
+	isPayload := false
+	payload := ""
 	url := fmt.Sprintf("%s/sub-accounts", client.BaseUrl)
 	token := fmt.Sprintf("Basic %s", client.BasicToken)
 
