@@ -202,3 +202,56 @@ func AuthorizeBulkTransfer(payload AuthorizeTransferReq) (*AuthorizeTransferRes,
 
 	return &response, status, nil
 }
+
+type ResendTransferOtpReq struct {
+	Reference string `json:"reference"`
+}
+
+type ResendTransferOtpRes struct {
+	RequestSuccessful bool                     `json:"requestSuccessful"`
+	ResponseMessage   string                   `json:"responseMessage"`
+	ResponseCode      string                   `json:"responseCode"`
+	ResponseBody      ResendTransferOtpResBody `json:"responseBody"`
+}
+
+type ResendTransferOtpResBody struct {
+	Message string `json:"message"`
+}
+
+func ResendSingleTransferOtp(payload ResendTransferOtpReq) (*ResendTransferOtpRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodPost
+	isPayload := true
+	url := fmt.Sprintf("%s/disbursements/single/resend-otp", client.BaseUrl)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+	var response ResendTransferOtpRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
+
+func ResendBulkTransferOtp(payload ResendTransferOtpReq) (*ResendTransferOtpRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodPost
+	isPayload := true
+	url := fmt.Sprintf("%s/disbursements/batch/resend-otp", client.BaseUrl)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+	var response ResendTransferOtpRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}

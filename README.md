@@ -269,7 +269,7 @@ func main() {
 ## Authorize Bulk Transfer
 Use this to authorize bulk transfer
 ### Use this object payload to implement the AuthorizeBulkTransfer() method
-Note: The Reference field is the unique reference for a single transaction
+Note: The Reference field is the unique reference for a bulk transaction
 ```go
 type AuthorizeTransferReq struct {
 	Reference         string `json:"reference"`
@@ -304,6 +304,83 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Resend Single Transfer Otp
+Use this to resend single transfer otp 
+### Use this object payload to implement the ResendSingleTransferOtp() method
+Note: The Reference field is the unique reference for a single transaction
+```go
+type ResendTransferOtpReq struct {
+	Reference string `json:"reference"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := transaction.ResendTransferOtpReq{}
+	res, status, err := transaction.ResendSingleTransferOtp(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
+## Resend Bulk Transfer Otp
+Use this to resend bulk transfer otp 
+### Use this object payload to implement the ResendBulkTransferOtp() method
+Note: The Reference field is the unique reference for a bulk transaction
+```go
+type ResendTransferOtpReq struct {
+	Reference string `json:"reference"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := transaction.ResendTransferOtpReq{}
+	res, status, err := transaction.ResendBulkTransferOtp(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
 
 ## Pay With Bank Transfer
 Use this to make payment using bank ussd code
