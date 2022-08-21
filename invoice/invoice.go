@@ -213,3 +213,60 @@ func CreateInvoiceTypeReservedAccount(payload CreateInvoiceTypeReservedAccountRe
 
 	return &response, status, nil
 }
+
+type AttachReservedAcctToInvoiceReq struct {
+	Amount           int    `json:"amount"`
+	AccountReference string `json:"accountReference"`
+	InvoiceReference string `json:"invoiceReference"`
+	Description      string `json:"description"`
+	CurrencyCode     string `json:"currencyCode"`
+	ContractCode     string `json:"contractCode"`
+	CustomerEmail    string `json:"customerEmail"`
+	CustomerName     string `json:"customerName"`
+	ExpiryDate       string `json:"expiryDate"`
+}
+
+type AttachReservedAcctToInvoiceRes struct {
+	RequestSuccessful bool                               `json:"requestSuccessful"`
+	ResponseMessage   string                             `json:"responseMessage"`
+	ResponseCode      string                             `json:"responseCode"`
+	ResponseBody      AttachReservedAcctToInvoiceResBody `json:"responseBody"`
+}
+
+type AttachReservedAcctToInvoiceResBody struct {
+	Amount           int    `json:"amount"`
+	InvoiceReference string `json:"invoiceReference"`
+	InvoiceStatus    string `json:"invoiceStatus"`
+	Description      string `json:"description"`
+	ContractCode     string `json:"contractCode"`
+	CustomerEmail    string `json:"customerEmail"`
+	CustomerName     string `json:"customerName"`
+	ExpiryDate       string `json:"expiryDate"`
+	CreatedBy        string `json:"createdBy"`
+	CreatedOn        string `json:"createdOn"`
+	CheckoutUrl      string `json:"checkoutUrl"`
+	AccountNumber    string `json:"accountNumber"`
+	AccountName      string `json:"accountName"`
+	BankName         string `json:"bankName"`
+	BankCode         string `json:"bankCode"`
+}
+
+func AttachReservedAcctToInvoice(payload AttachReservedAcctToInvoiceReq) (*AttachReservedAcctToInvoiceRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodPost
+	isPayload := true
+	url := fmt.Sprintf("%s/invoice/create", client.BaseUrl)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var response AttachReservedAcctToInvoiceRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}

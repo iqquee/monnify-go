@@ -560,3 +560,50 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Attach Reserved Account To Invoice
+Use this to attach a reserved account to an invoice
+### Use this object payload to implement the AttachReservedAcctToInvoice() method
+Note: This is the format for the ExpiryDate field YYYY-MM-DD HH:MM:SS
+
+```go
+type AttachReservedAcctToInvoiceReq struct {
+	Amount           int    `json:"amount"`
+	AccountReference string `json:"accountReference"`
+	InvoiceReference string `json:"invoiceReference"`
+	Description      string `json:"description"`
+	CurrencyCode     string `json:"currencyCode"`
+	ContractCode     string `json:"contractCode"`
+	CustomerEmail    string `json:"customerEmail"`
+	CustomerName     string `json:"customerName"`
+	ExpiryDate       string `json:"expiryDate"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/invoice"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := invoice.AttachReservedAcctToInvoiceReq{}
+	res, status, err := invoice.AttachReservedAcctToInvoice(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
