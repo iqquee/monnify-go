@@ -91,3 +91,57 @@ func GetInitiateSingleTransferStatus(paymentRef string) (*getInitiateSingleTrans
 
 	return &response, status, nil
 }
+
+type InitiateBulkTransferReq struct {
+	Title                string                                   `json:"title"`
+	BatchReference       string                                   `json:"batchReference"`
+	Narration            string                                   `json:"narration"`
+	WalletId             string                                   `json:"walletId"`
+	OnValidationFailure  string                                   `json:"onValidationFailure"`
+	NotificationInterval int                                      `json:"notificationInterval"`
+	TransactionList      []InitiateBulkTransferReqTransactionList `json:"transactionList"`
+}
+
+type InitiateBulkTransferReqTransactionList struct {
+	Amount        string `json:"amount"`
+	Reference     string `json:"reference"`
+	Narration     string `json:"narration"`
+	BankCode      string `json:"bankCode"`
+	AccountNumber string `json:"accountNumber"`
+	Currency      string `json:"currency"`
+}
+
+type InitiateBulkTransferRes struct {
+	RequestSuccessful bool                        `json:"requestSuccessful"`
+	ResponseMessage   string                      `json:"responseMessage"`
+	ResponseCode      string                      `json:"responseCode"`
+	ResponseBody      InitiateBulkTransferResBody `json:"responseBody"`
+}
+
+type InitiateBulkTransferResBody struct {
+	TotalAmount       float64 `json:"totalAmount"`
+	TotalFee          float64 `json:"totalFee"`
+	BatchReference    string  `json:"batchReference"`
+	BatchStatus       string  `json:"batchStatus"`
+	TotalTransactions int     `json:"totalTransactions"`
+	DateCreated       string  `json:"dateCreated"`
+}
+
+func InitiateBulkTransfer(payload InitiateBulkTransferReq) (*InitiateBulkTransferRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodPost
+	isPayload := true
+	url := fmt.Sprintf("%s/disbursements/batch", client.BaseUrl)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+	var response InitiateBulkTransferRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}

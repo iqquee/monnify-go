@@ -173,6 +173,60 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Initiate Bulk Transfer
+Use this to initiate bulk transfer 
+### Use this object payload to implement the InitiateBulkTransfer() method
+Note: Use BREAK to tell Monnify to reject the entire batch and use CONTINUE to tell Monnify to process the valid transactions fo the OnValidationFailure field
+```go
+type InitiateBulkTransferReq struct {
+	Title                string                                   `json:"title"`
+	BatchReference       string                                   `json:"batchReference"`
+	Narration            string                                   `json:"narration"`
+	WalletId             string                                   `json:"walletId"`
+	OnValidationFailure  string                                   `json:"onValidationFailure"`
+	NotificationInterval int                                   `json:"notificationInterval"`
+	TransactionList      []InitiateBulkTransferReqTransactionList `json:"transactionList"`
+}
+
+type InitiateBulkTransferReqTransactionList struct {
+	Amount        string `json:"amount"`
+	Reference     string `json:"reference"`
+	Narration     string `json:"narration"`
+	BankCode      string `json:"bankCode"`
+	AccountNumber string `json:"accountNumber"`
+	Currency      string `json:"currency"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := transaction.InitiateBulkTransferReq{}
+	res, status, err := transaction.InitiateBulkTransfer(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
 ## Pay With Bank Transfer
 Use this to make payment using bank ussd code
 
