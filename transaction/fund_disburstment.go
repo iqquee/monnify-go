@@ -134,6 +134,46 @@ func GetInitiateBulkTransferStatus(batchReference string) (*GetInitiateBulkTrans
 	return &response, status, nil
 }
 
+type GetBulkTransferDetailsRes struct {
+	RequestSuccessful bool                          `json:"requestSuccessful"`
+	ResponseMessage   string                        `json:"responseMessage"`
+	ResponseCode      string                        `json:"responseCode"`
+	ResponseBody      GetBulkTransferDetailsResBody `json:"responseBody"`
+}
+type GetBulkTransferDetailsResBody struct {
+	Title             string  `json:"title"`
+	TotalAmount       float64 `json:"totalAmount"`
+	TotalFee          float64 `json:"totalFee"`
+	BatchReference    string  `json:"batchReference"`
+	TotalTransactions int     `json:"totalTransactions"`
+	FailedCount       int     `json:"failedCount"`
+	SuccessfulCount   int     `json:"successfulCount"`
+	PendingCount      string  `json:"pendingCount"`
+	BatchStatus       string  `json:"batchStatus"`
+	DateCreated       string  `json:"dateCreated"`
+}
+
+func GetBulkTransferDetails(batchReference string) (*GetBulkTransferDetailsRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodGet
+	payload := ""
+	isPayload := false
+	url := fmt.Sprintf("%s/disbursements/batch/summary?reference=?reference=%s", client.BaseUrl, batchReference)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response GetBulkTransferDetailsRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
+
 type InitiateBulkTransferReq struct {
 	Title                string                                   `json:"title"`
 	BatchReference       string                                   `json:"batchReference"`
