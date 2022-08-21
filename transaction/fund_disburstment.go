@@ -71,7 +71,7 @@ func InitiateSingleTransfer(payload InitiateSingleTransferReq) (*initiateSingleT
 	return &response, status, nil
 }
 
-func GetInitiateSingleTransferStatus(paymentRef string) (*getInitiateSingleTransferStatusRes, int, error) {
+func GetSingleTransferDetails(paymentRef string) (*getInitiateSingleTransferStatusRes, int, error) {
 	client := monnify.NewClient()
 	method := monnify.MethodGet
 	payload := ""
@@ -113,7 +113,7 @@ type GetInitiateBulkTransferStatusResBody struct {
 	Status        string `json:"status"`
 }
 
-func GetInitiateBulkTransferStatus(batchReference string) (*GetInitiateBulkTransferStatusRes, int, error) {
+func GetBulkTransferStatus(batchReference string) (*GetInitiateBulkTransferStatusRes, int, error) {
 	client := monnify.NewClient()
 	method := monnify.MethodGet
 	payload := ""
@@ -331,6 +331,93 @@ func ResendBulkTransferOtp(payload ResendTransferOtpReq) (*ResendTransferOtpRes,
 		return nil, 0, err
 	}
 	var response ResendTransferOtpRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
+
+type ListAllSingleTransfersRes struct {
+	RequestSuccessful bool                          `json:"requestSuccessful"`
+	ResponseMessage   string                        `json:"responseMessage"`
+	ResponseCode      string                        `json:"responseCode"`
+	ResponseBody      ListAllSingleTransfersResBody `json:"responseBody"`
+}
+
+type ListAllSingleTransfersResBody struct {
+	Content []ListAllSingleTransfersResBodyContent `json:"content"`
+}
+
+type ListAllSingleTransfersResBodyContent struct {
+	Amount        int    `json:"amount"`
+	Reference     string `json:"reference"`
+	Narration     string `json:"narration"`
+	BankCode      string `json:"bankCode"`
+	AccountNumber string `json:"accountNumber"`
+	Currency      string `json:"currency"`
+	AccountName   string `json:"accountName"`
+	BankName      string `json:"bankName"`
+	DateCreated   string `json:"dateCreated"`
+	Fee           string `json:"fee"`
+	Status        string `json:"status"`
+}
+
+func ListAllSingleTransfers(pageSize int) (*ListAllSingleTransfersRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodGet
+	payload := ""
+	isPayload := false
+	url := fmt.Sprintf("%s/disbursements/single/transactions?pageSize=%d", client.BaseUrl, pageSize)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response ListAllSingleTransfersRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
+
+type ListAllBulkTransfersRes struct {
+	RequestSuccessful bool                        `json:"requestSuccessful"`
+	ResponseMessage   string                      `json:"responseMessage"`
+	ResponseCode      string                      `json:"responseCode"`
+	ResponseBody      ListAllBulkTransfersResBody `json:"responseBody"`
+}
+
+type ListAllBulkTransfersResBody struct {
+	Content []ListAllBulkTransfersResBodyContent `json:"content"`
+}
+
+type ListAllBulkTransfersResBodyContent struct {
+	TotalAmount       float64 `json:"totalAmount"`
+	TotalFee          float64 `json:"totalFee"`
+	BatchReference    string  `json:"batchReference"`
+	BatchStatus       string  `json:"batchStatus"`
+	TotalTransactions int     `json:"totalTransactions"`
+	DateCreated       string  `json:"dateCreated"`
+}
+
+func ListAllBulkTransfers(pageSize int) (*ListAllBulkTransfersRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodGet
+	payload := ""
+	isPayload := false
+	url := fmt.Sprintf("%s/disbursements/bulk/transactions?pageSize=%d", client.BaseUrl, pageSize)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response ListAllBulkTransfersRes
 	if err := json.Unmarshal(res, &response); err != nil {
 		return nil, 0, err
 	}

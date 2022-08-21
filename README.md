@@ -146,8 +146,8 @@ func main() {
 }
 ```
 
-## Initiate Single Transfer Status
-Use this to get the initiated single transfer status
+## Single Transfer Details
+Use this to get the initiated single transfer details
 ```go
 package main
 
@@ -164,7 +164,7 @@ func main() {
 	monnify.Options(apiKey, secretKey, baseUrl)
 
 	paymentReference := "ref123"
-	res, status, err := transaction.GetInitiateSingleTransferStatus(paymentReference)
+	res, status, err := transaction.GetSingleTransferDetails(paymentReference)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -174,9 +174,8 @@ func main() {
 }
 ```
 
-
-## Initiate Bulk Transfer Status
-Use this to get the initiated bulk transfer status
+## List all Single Transfers
+Use this to list all single transfers
 ```go
 package main
 
@@ -192,36 +191,8 @@ func main() {
 	baseUrl := "https://sandbox.monnify.com" // for test
 	monnify.Options(apiKey, secretKey, baseUrl)
 
-	batchReference := "ref123"
-	res, status, err := transaction.GetInitiateBulkTransferStatus(batchReference)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Println(status)
-	fmt.Println(res)
-}
-```
-
-## Get Bulk Transfer Details
-Use this to get bulk transfer details
-```go
-package main
-
-import (
-	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
-)
-
-func main() {
-	apiKey := ""
-	secretKey := ""
-	baseUrl := "https://sandbox.monnify.com" // for test
-	monnify.Options(apiKey, secretKey, baseUrl)
-
-	batchReference := "ref123"
-	res, status, err := transaction.GetBulkTransferDetails(batchReference)
+	pageSize := 5
+	res, status, err := transaction.ListAllSingleTransfers(pageSize)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -275,6 +246,91 @@ func main() {
 	
 	payload := transaction.InitiateBulkTransferReq{}
 	res, status, err := transaction.InitiateBulkTransfer(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
+
+## Bulk Transfer Status
+Use this to get the initiated bulk transfer status
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	batchReference := "ref123"
+	res, status, err := transaction.GetBulkTransferStatus(batchReference)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
+## Get Bulk Transfer Details
+Use this to get bulk transfer details
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	batchReference := "ref123"
+	res, status, err := transaction.GetBulkTransferDetails(batchReference)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
+## List all Bulk Transfers
+Use this to list all bulk transfers
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	pageSize := 5
+	res, status, err := transaction.ListAllBulkTransfers(pageSize)
 	if err != nil {
 		fmt.Println(err)
 	}
