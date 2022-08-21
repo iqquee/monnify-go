@@ -34,6 +34,34 @@ import "github.com/hisyntax/monnify-go"
 $ touch example.go
 # open the just created example.go file in the text editor of your choice
 ```
+
+## Get Disburstment Wallet Balance
+Use this to get disburstment wallet balance
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	walletId := "123"
+	res, status, err := transaction.GetDisburstmentWalletBal(walletId)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
 ## Accept Payment
 Use this to accept payments from customers
 

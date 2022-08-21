@@ -424,3 +424,36 @@ func ListAllBulkTransfers(pageSize int) (*ListAllBulkTransfersRes, int, error) {
 
 	return &response, status, nil
 }
+
+type GetDisburstmentWalletBalRes struct {
+	RequestSuccessful bool                            `json:"requestSuccessful"`
+	ResponseMessage   string                          `json:"responseMessage"`
+	ResponseCode      string                          `json:"responseCode"`
+	ResponseBody      GetDisburstmentWalletBalResBody `json:"responseBody"`
+}
+
+type GetDisburstmentWalletBalResBody struct {
+	AvailableBalance int `json:"availableBalance"`
+	LedgerBalance    int `json:"ledgerBalance"`
+}
+
+func GetDisburstmentWalletBal(walletId int) (*GetDisburstmentWalletBalRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodGet
+	payload := ""
+	isPayload := false
+	url := fmt.Sprintf("%s/disbursements/wallet-balance?walletId=%d", client.BaseUrl, walletId)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response GetDisburstmentWalletBalRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
