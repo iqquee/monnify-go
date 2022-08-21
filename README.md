@@ -869,3 +869,47 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Reserve Account with Limit
+Use this to reserve account with limit
+### Use this object payload to implement the ReserveAcctWithLimit() method
+
+```go
+type ReserveAcctWithLimitReq struct {
+	ContractCode     string `json:"contractCode"`
+	AccountName      string `json:"accountName"`
+	CurrencyCode     string `json:"currencyCode"`
+	AccountReference string `json:"accountReference"`
+	CustomerEmail    string `json:"customerEmail"`
+	CustomerName     string `json:"customerName"`
+	LimitProfileCode string `json:"limitProfileCode"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/limitprofile"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := limitprofile.ReserveAcctWithLimitReq{}
+	res, status, err := limitprofile.ReserveAcctWithLimit(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```

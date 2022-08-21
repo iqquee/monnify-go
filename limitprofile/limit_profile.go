@@ -117,3 +117,61 @@ func UpdateLimitProfile(payload UpdateLimitProfileReq) (*CreateLimitProfileRes, 
 
 	return &response, status, nil
 }
+
+type ReserveAcctWithLimitReq struct {
+	ContractCode     string `json:"contractCode"`
+	AccountName      string `json:"accountName"`
+	CurrencyCode     string `json:"currencyCode"`
+	AccountReference string `json:"accountReference"`
+	CustomerEmail    string `json:"customerEmail"`
+	CustomerName     string `json:"customerName"`
+	LimitProfileCode string `json:"limitProfileCode"`
+}
+
+type ReserveAcctWithLimitRes struct {
+	RequestSuccessful bool                        `json:"requestSuccessful"`
+	ResponseMessage   string                      `json:"responseMessage"`
+	ResponseCode      string                      `json:"responseCode"`
+	ResponseBody      ReserveAcctWithLimitResBody `json:"responseBody"`
+}
+
+type ReserveAcctWithLimitResBody struct {
+	ContractCode         string `json:"contractCode"`
+	AccountReference     string `json:"accountReference"`
+	AccountName          string `json:"accountName"`
+	CurrencyCode         string `json:"currencyCode"`
+	CustomerEmail        string `json:"customerEmail"`
+	CustomerName         string `json:"customerName"`
+	AccountNumber        string `json:"accountNumber"`
+	BankName             string `json:"bankName"`
+	BankCode             string `json:"bankCode"`
+	ReservationReference string `json:"reservationReference"`
+	Status               string `json:"status"`
+	CreatedOn            string `json:"createdOn"`
+	LimitProfileConfig   struct {
+		LimitProfileCode       string  `json:"limitProfileCode"`
+		SingleTransactionValue float64 `json:"singleTransactionValue"`
+		DailyTransactionVolume int     `json:"dailyTransactionVolume"`
+		DailyTransactionValue  float64 `json:"dailyTransactionValue"`
+	} `json:"limitProfileConfig"`
+}
+
+func ReserveAcctWithLimit(payload ReserveAcctWithLimitReq) (*ReserveAcctWithLimitRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodPost
+	isPayload := true
+	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts/limit", client.BaseUrl)
+	token := fmt.Sprintf("Bearer %s", client.BearerToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response ReserveAcctWithLimitRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
