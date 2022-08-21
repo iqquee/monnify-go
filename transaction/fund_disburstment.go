@@ -457,3 +457,37 @@ func GetDisburstmentWalletBal(walletId int) (*GetDisburstmentWalletBalRes, int, 
 
 	return &response, status, nil
 }
+
+type ValidateBankAcctDetailsRes struct {
+	RequestSuccessful bool                           `json:"requestSuccessful"`
+	ResponseMessage   string                         `json:"responseMessage"`
+	ResponseCode      string                         `json:"responseCode"`
+	ResponseBody      ValidateBankAcctDetailsResBody `json:"responseBody"`
+}
+
+type ValidateBankAcctDetailsResBody struct {
+	AccountNumber string `json:"accountNumber"`
+	AccountName   string `json:"accountName"`
+	BankCode      string `json:"bankCode"`
+}
+
+func ValidateBankAcctDetails(acctNum, bankCode int) (*ValidateBankAcctDetailsRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodGet
+	payload := ""
+	isPayload := false
+	url := fmt.Sprintf("%s/disbursements/account/validate?accountNumber=%d&bankCode=%d", client.BaseUrl, acctNum, bankCode)
+	token := fmt.Sprintf("Basic %s", client.BasicToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response ValidateBankAcctDetailsRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}

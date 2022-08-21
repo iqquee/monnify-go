@@ -522,6 +522,35 @@ func main() {
 }
 ```
 
+## Validate Bank Account Details
+Use this to validate bank account details
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/transaction"
+)
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+
+	acctNum := 042222222222
+	bankCode := 042
+	res, status, err := transaction.ValidateBankAcctDetails(acctNum, bankCode)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
+
 
 ## Pay With Bank Transfer
 Use this to make payment using bank ussd code
