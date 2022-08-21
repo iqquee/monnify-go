@@ -827,3 +827,45 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Update Limit Profile
+Use this to update a limit profile
+### Use this object payload to implement the CreateLimitProfile() method
+
+```go
+type UpdateLimitProfileReq struct {
+	LimitProfileName       string `json:"limitProfileName"`
+	SingleTransactionValue string `json:"singleTransactionValue"`
+	DailyTransactionVolume string `json:"dailyTransactionVolume"`
+	DailyTransactionValue  string `json:"dailyTransactionValue"`
+	LimitProfileCode       string
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/limitprofile"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := limitprofile.UpdateLimitProfileReq{}
+	res, status, err := limitprofile.UpdateLimitProfile(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```

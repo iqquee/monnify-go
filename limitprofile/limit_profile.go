@@ -89,3 +89,31 @@ func GetLimitProfiles() (*GetLimitProfilesRes, int, error) {
 
 	return &response, status, nil
 }
+
+type UpdateLimitProfileReq struct {
+	LimitProfileName       string `json:"limitProfileName"`
+	SingleTransactionValue string `json:"singleTransactionValue"`
+	DailyTransactionVolume string `json:"dailyTransactionVolume"`
+	DailyTransactionValue  string `json:"dailyTransactionValue"`
+	LimitProfileCode       string
+}
+
+func UpdateLimitProfile(payload UpdateLimitProfileReq) (*CreateLimitProfileRes, int, error) {
+	client := monnify.NewClient()
+	method := monnify.MethodUpdate
+	isPayload := true
+	url := fmt.Sprintf("%s/limit-profile/%s", client.BaseUrl, payload.LimitProfileCode)
+	token := fmt.Sprintf("Bearer %s", client.BearerToken)
+
+	res, status, err := monnify.NewRequest(method, url, token, isPayload, payload)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response CreateLimitProfileRes
+	if err := json.Unmarshal(res, &response); err != nil {
+		return nil, 0, err
+	}
+
+	return &response, status, nil
+}
