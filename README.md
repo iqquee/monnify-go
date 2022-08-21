@@ -607,3 +607,47 @@ func main() {
 	fmt.Println(res)
 }
 ```
+
+## Create a Sub Account
+Use this to create a sub account
+### Use this object payload to implement the CreateSubAccount() method
+
+```go
+type CreateSubAccountReq struct {
+	CurrencyCode           string `json:"currencyCode"`
+	AccountNumber          string `json:"accountNumber"`
+	AccountName            string `json:"accountName"`
+	SubAccountCode         string `json:"subAccountCode"`
+	BankCode               string `json:"bankCode"`
+	Email                  string `json:"email"`
+	DefaultSplitPercentage string `json:"defaultSplitPercentage"`
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	monnify "github.com/hisyntax/monnify-go"
+	"github.com/hisyntax/monnify-go/subacct"
+)
+
+
+
+func main() {
+	apiKey := ""
+	secretKey := ""
+	baseUrl := "https://sandbox.monnify.com" // for test
+	monnify.Options(apiKey, secretKey, baseUrl)
+	
+	payload := subacct.CreateSubAccountReq{}
+	res, status, err := subacct.CreateSubAccount(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(status)
+	fmt.Println(res)
+}
+```
