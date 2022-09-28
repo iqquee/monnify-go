@@ -52,7 +52,7 @@ func main() {
 	baseUrl := "https://sandbox.monnify.com" // for test
 	monnify.Options(apiKey, secretKey, baseUrl)
 
-	walletId := "123"
+	walletId := 123
 	res, status, err := transaction.GetDisburstmentWalletBal(walletId)
 	if err != nil {
 		fmt.Println(err)
