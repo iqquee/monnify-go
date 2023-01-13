@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/hisyntax/monnify-go"
+	"github.com/iqquee/monnify-go"
 )
 
 type PayWithBankRes struct {

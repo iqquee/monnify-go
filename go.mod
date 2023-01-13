@@ -1,3 +1,3 @@
-module github.com/hisyntax/monnify-go
+module github.com/iqquee/monnify-go
 
-go 1.18
+go 1.19

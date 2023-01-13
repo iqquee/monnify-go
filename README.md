@@ -17,11 +17,11 @@ Monnify is a payment gateway for businesses to accept payments from customers, e
 To install this monnify package, you need to install [Go](https://golang.org/) and set your Go workspace first.
 1. You can use the below Go command to install monnify-go
 ```sh
-$ go get -u github.com/hisyntax/monnify-go
+$ go get -u github.com/iqquee/monnify-go
 ```
 2. Import it in your code:
 ```sh
-import "github.com/hisyntax/monnify-go"
+import "github.com/iqquee/monnify-go"
 ```
 ## Note : All methods in this package returns three (3) things:
 - [x] An object of the response
@@ -42,8 +42,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -85,8 +85,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -113,8 +113,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -153,8 +153,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -181,8 +181,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -209,8 +209,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -260,8 +260,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 
@@ -291,8 +291,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -319,8 +319,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -347,8 +347,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -384,8 +384,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 
@@ -423,8 +423,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 
@@ -461,8 +461,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 
@@ -499,8 +499,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 
@@ -529,8 +529,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -568,8 +568,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/transaction"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/transaction"
 )
 
 func main() {
@@ -618,8 +618,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/account"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/account"
 )
 
 
@@ -659,8 +659,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/account"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/account"
 )
 
 
@@ -691,8 +691,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/account"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/account"
 )
 
 
@@ -723,8 +723,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/account"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/account"
 )
 
 
@@ -779,8 +779,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/invoice"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/invoice"
 )
 
 
@@ -810,8 +810,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/invoice"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/invoice"
 )
 
 
@@ -841,8 +841,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/invoice"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/invoice"
 )
 
 
@@ -872,8 +872,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/invoice"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/invoice"
 )
 
 
@@ -918,8 +918,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/invoice"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/invoice"
 )
 
 
@@ -965,8 +965,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/invoice"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/invoice"
 )
 
 
@@ -1009,8 +1009,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/subacct"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/subacct"
 )
 
 
@@ -1040,8 +1040,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/subacct"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/subacct"
 )
 
 
@@ -1082,8 +1082,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/subacct"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/subacct"
 )
 
 
@@ -1113,8 +1113,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/subacct"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/subacct"
 )
 
 
@@ -1155,8 +1155,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/limitprofile"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/limitprofile"
 )
 
 
@@ -1186,8 +1186,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/limitprofile"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/limitprofile"
 )
 
 
@@ -1227,8 +1227,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/limitprofile"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/limitprofile"
 )
 
 
@@ -1271,8 +1271,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/limitprofile"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/limitprofile"
 )
 
 
@@ -1310,8 +1310,8 @@ package main
 
 import (
 	"fmt"
-	monnify "github.com/hisyntax/monnify-go"
-	"github.com/hisyntax/monnify-go/limitprofile"
+	monnify "github.com/iqquee/monnify-go"
+	"github.com/iqquee/monnify-go/limitprofile"
 )
 
 
