@@ -49,7 +49,7 @@ type (
 
 // CreateReservedAcct allows the creation of dedicated virtual accounts for your customers.
 func (c *Client) CreateReservedAcct(payload CreateReservedAcctReq) (*CreateReservedAcctRes, error) {
-	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts", c.baseURL)
+	url := fmt.Sprintf("%s/v1/bank-transfer/reserved-accounts", c.baseURL)
 
 	c.isBasic = false
 	var response CreateReservedAcctRes

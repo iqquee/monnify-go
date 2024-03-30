@@ -78,24 +78,7 @@ type (
 			Empty            bool `json:"empty"`
 		} `json:"responseBody"`
 	}
-)
 
-// GetReservedAcctTransactions returns the list of all transactions done on a reserved account.
-func (c *Client) GetReservedAcctTransactions(payload GetReservedAcctTransactionsReq) (*GetReservedAcctTransactionsRes, error) {
-	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts/transactions?accountReference=%s&page=%s&size=%s", c.baseURL, payload.AccountReference, payload.Page, payload.Size)
-
-	c.isBasic = false
-	var response GetReservedAcctTransactionsRes
-	if err := c.newRequest(http.MethodGet, url, payload, response); err != nil {
-		if err = c.generateNewBearerToken(); err != nil {
-			return nil, err
-		}
-	}
-
-	return &response, nil
-}
-
-type (
 	// GetReservedAccountDetailsRes response object
 	GetReservedAccountDetailsRes struct {
 		RequestSuccessful bool   `json:"requestSuccessful"`
@@ -124,24 +107,7 @@ type (
 			TransactionCount int `json:"transactionCount"`
 		} `json:"responseBody"`
 	}
-)
 
-// GetReservedAccountDetails returns details of an account reserved for a customer
-func (c *Client) GetReservedAccountDetails(accountRef string) (*GetReservedAccountDetailsRes, error) {
-	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts/%s", c.baseURL, accountRef)
-
-	c.isBasic = false
-	var response GetReservedAccountDetailsRes
-	if err := c.newRequest(http.MethodGet, url, nil, response); err != nil {
-		if err = c.generateNewBearerToken(); err != nil {
-			return nil, err
-		}
-	}
-
-	return &response, nil
-}
-
-type (
 	// DeleteReservedAccountRes response object
 	DeleteReservedAccountRes struct {
 		RequestSuccessful bool   `json:"requestSuccessful"`
@@ -164,9 +130,39 @@ type (
 	}
 )
 
+// GetReservedAcctTransactions returns the list of all transactions done on a reserved account.
+func (c *Client) GetReservedAcctTransactions(payload GetReservedAcctTransactionsReq) (*GetReservedAcctTransactionsRes, error) {
+	url := fmt.Sprintf("%s/v1/bank-transfer/reserved-accounts/transactions?accountReference=%s&page=%s&size=%s", c.baseURL, payload.AccountReference, payload.Page, payload.Size)
+
+	c.isBasic = false
+	var response GetReservedAcctTransactionsRes
+	if err := c.newRequest(http.MethodGet, url, payload, response); err != nil {
+		if err = c.generateNewBearerToken(); err != nil {
+			return nil, err
+		}
+	}
+
+	return &response, nil
+}
+
+// GetReservedAccountDetails returns details of an account reserved for a customer
+func (c *Client) GetReservedAccountDetails(accountRef string) (*GetReservedAccountDetailsRes, error) {
+	url := fmt.Sprintf("%s/v1/bank-transfer/reserved-accounts/%s", c.baseURL, accountRef)
+
+	c.isBasic = false
+	var response GetReservedAccountDetailsRes
+	if err := c.newRequest(http.MethodGet, url, nil, response); err != nil {
+		if err = c.generateNewBearerToken(); err != nil {
+			return nil, err
+		}
+	}
+
+	return &response, nil
+}
+
 // DeleteReservedAccount allows you to deallocate/delete already created a reserved account.
 func (c *Client) DeleteReservedAccount(accountRef string) (*DeleteReservedAccountRes, error) {
-	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts/%s", c.baseURL, accountRef)
+	url := fmt.Sprintf("%s/v1/bank-transfer/reserved-accounts/%s", c.baseURL, accountRef)
 
 	c.isBasic = false
 	var response DeleteReservedAccountRes
