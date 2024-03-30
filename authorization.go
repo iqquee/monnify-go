@@ -28,7 +28,7 @@ func (c *Client) basicTokenGen() {
 
 // bearerTokenGen generates a bearer token using the base64 form of the API Key and secret Key
 func (c *Client) bearerTokenGen() error {
-	url := fmt.Sprintf("%s/auth/login/", c.baseURL)
+	url := fmt.Sprintf("%s/v1/auth/login/", c.baseURL)
 
 	// generate basic token
 	c.basicTokenGen()

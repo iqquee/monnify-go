@@ -103,7 +103,7 @@ type (
 
 // CreateLimitProfile creates limit profiles on a customer's account
 func (c *Client) CreateLimitProfile(payload CreateLimitProfileReq) (*CreateLimitProfileRes, error) {
-	url := fmt.Sprintf("%s/limit-profile", c.baseURL)
+	url := fmt.Sprintf("%s/v1/limit-profile", c.baseURL)
 
 	c.isBasic = false
 	var response CreateLimitProfileRes
@@ -118,7 +118,7 @@ func (c *Client) CreateLimitProfile(payload CreateLimitProfileReq) (*CreateLimit
 
 // GetLimitProfiles returns the list of all Limit Profiles that have been created for your customers
 func (c *Client) GetLimitProfiles() (*GetLimitProfilesRes, error) {
-	url := fmt.Sprintf("%s/limit-profile", c.baseURL)
+	url := fmt.Sprintf("%s/v1/limit-profile", c.baseURL)
 
 	c.isBasic = false
 	var response GetLimitProfilesRes
@@ -133,7 +133,7 @@ func (c *Client) GetLimitProfiles() (*GetLimitProfilesRes, error) {
 
 // UpdateLimitProfile updates the information on an existing Limit Profile
 func (c *Client) UpdateLimitProfile(payload UpdateLimitProfileReq) (*CreateLimitProfileRes, error) {
-	url := fmt.Sprintf("%s/limit-profile/%s", c.baseURL, payload.LimitProfileCode)
+	url := fmt.Sprintf("%s/v1/limit-profile/%s", c.baseURL, payload.LimitProfileCode)
 
 	c.isBasic = false
 	var response CreateLimitProfileRes
@@ -148,7 +148,7 @@ func (c *Client) UpdateLimitProfile(payload UpdateLimitProfileReq) (*CreateLimit
 
 // ReserveAcctWithLimit reserves an account for your customers with a transaction limit profile on it
 func (c *Client) ReserveAcctWithLimit(payload ReserveAcctWithLimitReq) (*ReserveAcctWithLimitRes, error) {
-	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts/limit", c.baseURL)
+	url := fmt.Sprintf("%s/v1/bank-transfer/reserved-accounts/limit", c.baseURL)
 
 	c.isBasic = false
 	var response ReserveAcctWithLimitRes
@@ -163,7 +163,7 @@ func (c *Client) ReserveAcctWithLimit(payload ReserveAcctWithLimitReq) (*Reserve
 
 // UpdateReserveAcctWithLimit updates the information on an existing Limit Profile for a Reserved Account
 func (c *Client) UpdateReserveAcctWithLimit(payload UpdateReserveAcctWithLimitReq) (*ReserveAcctWithLimitRes, error) {
-	url := fmt.Sprintf("%s/bank-transfer/reserved-accounts/limit", c.baseURL)
+	url := fmt.Sprintf("%s/v1/bank-transfer/reserved-accounts/limit", c.baseURL)
 
 	c.isBasic = false
 	var response ReserveAcctWithLimitRes
